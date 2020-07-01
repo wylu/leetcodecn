@@ -51,7 +51,7 @@ package p700to799
  * Dynamic Programming
  *
  * State:
- *   dp[i][j]: 表示以A[i]和B[j]为结尾的LCS的长度
+ *   dp[i+1][j+1]: 表示以A[i]和B[j]为结尾的LCS的长度
  *
  * Initial State:
  *   dp[i][0] = 0, 0 <= i < len(A)
@@ -59,13 +59,13 @@ package p700to799
  *
  * State Transition:
  *   if (A[i] == B[j]) dp[i+1][j+1] = dp[i][j] + 1;
- *   else dp[i+1][j=1] = 0;
+ *   else dp[i+1][j+1] = 0;
  */
 // @lc code=start
 func findLength(A []int, B []int) int {
 	dp := make([][]int, len(A)+1)
 	for i := 0; i < len(dp); i++ {
-		dp[i] = make([]int, len(B) + 1)
+		dp[i] = make([]int, len(B)+1)
 	}
 	res := 0
 	for i := 0; i < len(A); i++ {
