@@ -47,6 +47,16 @@ package p300to399
  * @Contact :   15wylu@gmail.com
  * @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
  * @Desc    :
+ * 1.二维数组中 matrix[0][0] 为最小值，matrix[n−1][n−1] 为最大值，
+ *   分别将其记作 left 和 right。
+ * 2.任取一个数 mid 满足 left <= mid <= right，那么矩阵中不大于 mid 的数，
+ *   全部分布在矩阵的左上角；大于 mid 的数分布在矩阵的右下角；
+ * 3.当分布在左上角的数的个数等于 k 时，mid 即为所求。
+ * 4.计算左上角的数的个数的方法：
+ *   - 初始位置在 matrix[n−1][0]（即左下角）；
+ *   - 设当前位置为 matrix[i][j]。若 matrix[i][j] <= mid，则将当前所在列的
+ *     不大于 mid 的数的数量（即 i+1）累加到答案中，并向右移动，否则向上移动；
+ *   - 不断移动直到走出格子为止。
  */
 // @lc code=start
 func kthSmallest(matrix [][]int, k int) int {
