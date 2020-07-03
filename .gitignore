@@ -16,3 +16,6 @@
 
 # VSCode
 .vscode
+
+# Jetbrains
+.idea
