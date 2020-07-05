@@ -1,11 +1,5 @@
 package offer
 
-// ListNode - Definition for singly-linked list.
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
 /**
  * @File    :   06.从尾到头打印链表.go
  * @Time    :   2020/07/04 22:37:24
