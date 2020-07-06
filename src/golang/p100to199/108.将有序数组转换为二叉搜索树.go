@@ -1,12 +1,5 @@
 package p100to199
 
-// TreeNode Definition for a binary tree node.
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 /*
  * @lc app=leetcode.cn id=108 lang=golang
  *
