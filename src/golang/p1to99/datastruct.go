@@ -1,4 +1,4 @@
-package p100to199
+package p1to99
 
 /**
  * @File    :   datastruct.go
