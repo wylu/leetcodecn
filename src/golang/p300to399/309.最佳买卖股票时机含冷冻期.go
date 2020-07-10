@@ -44,11 +44,13 @@ package p300to399
  *
  * State:
  *   dp[i]: 表示第 i 天结束之后的「累计最大收益」。
- *   根据题目描述，由于最多只能同时买入（持有）一支股票，并且卖出股票后有冷冻期的限制，
- *   因此会有三种不同的状态：
- *   - 目前持有一支股票，对应的「累计最大收益」记为 dp[i][0]；
- *   - 目前不持有任何股票，并且处于冷冻期中，对应的「累计最大收益」记为 dp[i][1]；
- *   - 目前不持有任何股票，并且不处于冷冻期中，对应的「累计最大收益」记为 dp[i][2]；
+ *   根据题目描述，由于最多只能同时买入（持有）一支股票，并且卖出股票后有冷冻期的
+ *   限制，因此会有三种不同的状态：
+ *   - 第 i 天结束后持有一支股票，对应的「累计最大收益」记为 dp[i][0]；
+ *   - 第 i 天结束后不持有任何股票，并且处于冷冻期中，（也即第 i 天进行了卖出
+ *     操作），对应的「累计最大收益」记为 dp[i][1]；
+ *   - 第 i 天结束后不持有任何股票，并且不处于冷冻期中，（也即第 i 天进行不进行
+ *     任何操作），对应的「累计最大收益」记为 dp[i][2]；
  *
  * Initial State:
  *   dp[0][0] = -prices[0]
@@ -94,15 +96,15 @@ func maxProfit(prices []int) int {
 		return 0
 	}
 
-	n := len(prices)
-	dp := make([][3]int, n)
-	dp[0][0] = -prices[0]
-	for i := 1; i < n; i++ {
-		dp[i][0] = max(dp[i-1][0], dp[i-1][2]-prices[i])
-		dp[i][1] = dp[i-1][0] + prices[i]
-		dp[i][2] = max(dp[i-1][1], dp[i-1][2])
+	// 优化空间复杂度
+	dp0, dp1, dp2 := -prices[0], 0, 0
+	for i := 1; i < len(prices); i++ {
+		tmp0 := max(dp0, dp2-prices[i])
+		tmp1 := dp0 + prices[i]
+		tmp2 := max(dp1, dp2)
+		dp0, dp1, dp2 = tmp0, tmp1, tmp2
 	}
-	return max(dp[n-1][1], dp[n-1][2])
+	return max(dp1, dp2)
 }
 
 func max(x, y int) int {
@@ -113,3 +115,26 @@ func max(x, y int) int {
 }
 
 // @lc code=end
+
+// func maxProfit(prices []int) int {
+// 	if prices == nil || len(prices) == 0 {
+// 		return 0
+// 	}
+
+// 	n := len(prices)
+// 	dp := make([][3]int, n)
+// 	dp[0][0] = -prices[0]
+// 	for i := 1; i < n; i++ {
+// 		dp[i][0] = max(dp[i-1][0], dp[i-1][2]-prices[i])
+// 		dp[i][1] = dp[i-1][0] + prices[i]
+// 		dp[i][2] = max(dp[i-1][1], dp[i-1][2])
+// 	}
+// 	return max(dp[n-1][1], dp[n-1][2])
+// }
+
+// func max(x, y int) int {
+// 	if x > y {
+// 		return x
+// 	}
+// 	return y
+// }
