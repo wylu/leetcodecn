@@ -66,14 +66,14 @@ func longestValidParentheses(s string) int {
 			if len(stack) == 0 {
 				stack = append(stack, i)
 			} else {
-				res = max(res, i-stack[len(stack)-1])
+				res = max32(res, i-stack[len(stack)-1])
 			}
 		}
 	}
 	return res
 }
 
-func max(x, y int) int {
+func max32(x, y int) int {
 	if x > y {
 		return x
 	}
