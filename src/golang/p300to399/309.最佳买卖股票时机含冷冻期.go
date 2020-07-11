@@ -39,7 +39,50 @@ package p300to399
  * @Version :   1.0
  * @Contact :   15wylu@gmail.com
  * @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
- * @Desc    :
+ * @Desc    :   Vesion 3
+ * Dynamic Programming
+ *
+ * State:
+ *   dp[i][0]: 表示第 i+1 天结束时，不持有股票，所能获得的最大利润。
+ *   dp[i][1]: 表示第 i+1 天结束时，持有股票，所能获得的最大利润。
+ *
+ * Initial State:
+ *   dp[-1][0] = Integer.MIN_VALUE
+ *   dp[0][0] = 0
+ *   dp[0][1] = -prices[0]
+ *
+ * State Transition:
+ *   dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i]), i > 0
+ *   dp[i][1] = max(dp[i-1][1], dp[i-2][0]-prices[i]), i > 0
+ */
+// @lc code=start
+func maxProfit(prices []int) int {
+	if prices == nil || len(prices) <= 1 {
+		return 0
+	}
+
+	// 优化空间复杂度
+	// dpi20: dp[i-2][0], dpi10: dp[i-1][0], dpi11: dp[i-1][1]
+	dpi20, dpi10, dpi11 := 0, 0, -prices[0]
+	for i := 1; i < len(prices); i++ {
+		tmp := dpi20
+		dpi20 = dpi10
+		dpi10 = max309(dpi10, dpi11+prices[i])
+		dpi11 = max309(dpi11, tmp-prices[i])
+	}
+	return dpi10
+}
+
+func max309(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
+
+// @lc code=end
+
+/**
  * Dynamic Programming
  *
  * State:
@@ -90,32 +133,31 @@ package p300to399
  * 的较大值，即：
  *     max(dp[n−1][1], dp[n−1][2])
  */
-// @lc code=start
-func maxProfit(prices []int) int {
-	if prices == nil || len(prices) == 0 {
-		return 0
-	}
+// Version 2
+// func maxProfit(prices []int) int {
+// 	if prices == nil || len(prices) == 0 {
+// 		return 0
+// 	}
 
-	// 优化空间复杂度
-	dp0, dp1, dp2 := -prices[0], 0, 0
-	for i := 1; i < len(prices); i++ {
-		tmp0 := max309(dp0, dp2-prices[i])
-		tmp1 := dp0 + prices[i]
-		tmp2 := max309(dp1, dp2)
-		dp0, dp1, dp2 = tmp0, tmp1, tmp2
-	}
-	return max309(dp1, dp2)
-}
+// 	// 优化空间复杂度
+// 	dp0, dp1, dp2 := -prices[0], 0, 0
+// 	for i := 1; i < len(prices); i++ {
+// 		tmp0 := max309(dp0, dp2-prices[i])
+// 		tmp1 := dp0 + prices[i]
+// 		tmp2 := max309(dp1, dp2)
+// 		dp0, dp1, dp2 = tmp0, tmp1, tmp2
+// 	}
+// 	return max309(dp1, dp2)
+// }
 
-func max309(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
-}
+// func max309(x, y int) int {
+// 	if x > y {
+// 		return x
+// 	}
+// 	return y
+// }
 
-// @lc code=end
-
+// Version 1
 // func maxProfit(prices []int) int {
 // 	if prices == nil || len(prices) == 0 {
 // 		return 0
