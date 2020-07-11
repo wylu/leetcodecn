@@ -47,14 +47,14 @@ func respace(dictionary []string, sentence string) int {
 			}
 			cur = cur.children[c]
 			if cur.isWord {
-				dp[i] = min(dp[i], dp[j])
+				dp[i] = min1713(dp[i], dp[j])
 			}
 		}
 	}
 	return dp[n]
 }
 
-func min(x, y int) int {
+func min1713(x, y int) int {
 	if x < y {
 		return x
 	}
@@ -111,14 +111,14 @@ func (root *Trie) insert(s string) {
 // 		for j := 0; j < i; j++ {
 // 			key := string(st[j:i])
 // 			if _, ok := dict[key]; ok {
-// 				dp[i] = min(dp[i], dp[j])
+// 				dp[i] = min1713(dp[i], dp[j])
 // 			}
 // 		}
 // 	}
 // 	return dp[n]
 // }
 
-// func min(x, y int) int {
+// func min1713(x, y int) int {
 // 	if x < y {
 // 		return x
 // 	}
