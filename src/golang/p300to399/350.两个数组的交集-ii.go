@@ -62,22 +62,16 @@ func intersect(nums1 []int, nums2 []int) []int {
 		nums1, nums2 = nums2, nums1
 	}
 
-	couters := make(map[int]int)
+	couters := map[int]int{}
 	for _, num := range nums1 {
-		cnt, ok := couters[num]
-		if ok {
-			couters[num] = cnt + 1
-		} else {
-			couters[num] = 1
-		}
+		couters[num]++
 	}
 
 	ans := []int{}
 	for _, num := range nums2 {
-		cnt, ok := couters[num]
-		if ok && cnt > 0 {
+		if couters[num] > 0 {
 			ans = append(ans, num)
-			couters[num] = cnt - 1
+			couters[num]--
 		}
 	}
 	return ans
