@@ -52,18 +52,16 @@ package p100to199
  * Dynamic Programming
  *
  * State:
- *   dp[i]: 表示自顶向下到达该层的第 i+1 个结点的最小路径和。
+ *   dp[j]: 表示自顶向下到达该层的第 j+1 个结点的最小路径和。
  *
  * Initial State:
- *   curLevel = 0
- *   dp[0] = triangle[0][0]
+ *   dp[0] = triangle[0][0]  // i = 0
  *
  * State Transition:
- *   0 < curLevel < totalLevel
- *   n = curLevel+1  // 当前层的大小
- *   dp[i] = min(dp[i-1], dp[i]) + triangle[curLevel][i];  // 0 < i < n - 1
- *   dp[0] += triangle[curLevel][0];  // i == 0
- *   dp[n-1] = dp[n-2] + triangle[curLevel][n-1];   // i == n - 1
+ *   1 <= i < n
+ *   dp[i] = dp[i-1] + triangle[i][i]  // j == i
+ *   dp[j] = min(dp[j-1], dp[j]) + triangle[i][i];  // 1 <= j <= i-1
+ *   dp[0] += triangle[i][0];  // j == 0
  */
 // @lc code=start
 func minimumTotal(triangle [][]int) int {
@@ -71,16 +69,16 @@ func minimumTotal(triangle [][]int) int {
 		return -1
 	}
 
-	totalLevel := len(triangle)
-	dp := make([]int, len(triangle[totalLevel-1]))
+	n := len(triangle)
+	dp := make([]int, len(triangle[n-1]))
 	dp[0] = triangle[0][0]
-	for curLevel := 1; curLevel < totalLevel; curLevel++ {
-		for i := 1; i < curLevel; i++ {
-			dp[i] = min120(dp[i-1], dp[i]) + triangle[curLevel][i]
+
+	for i := 1; i < n; i++ {
+		dp[i] = dp[i-1] + triangle[i][i]
+		for j := i - 1; j > 0; j-- {
+			dp[j] = min120(dp[j-1], dp[j]) + triangle[i][j]
 		}
-		head := dp[0] + triangle[curLevel][0]
-		tail := dp[curLevel-1] + triangle[curLevel][curLevel]
-		dp[0], dp[curLevel] = head, tail
+		dp[0] += triangle[i][0]
 	}
 
 	res := dp[0]
