@@ -63,7 +63,7 @@ func isPalindrome(head *ListNode) bool {
 	}
 
 	// 反转中点之后的链表
-	l1, rl2 := head, reverseList(slow)
+	l1, rl2 := head, reverseList234(slow)
 
 	for rl2 != nil {
 		if l1.Val != rl2.Val {
@@ -75,7 +75,7 @@ func isPalindrome(head *ListNode) bool {
 	return true
 }
 
-func reverseList(head *ListNode) *ListNode {
+func reverseList234(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
