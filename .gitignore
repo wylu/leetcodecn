@@ -5,6 +5,28 @@
 *.so
 *.dylib
 
+## C/C++
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.ilk
+*.pdb
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
 # Test binary, built with `go test -c`
 *.test
 
