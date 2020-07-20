@@ -1,0 +1,35 @@
+{
+    "tasks": [{
+        "type": "shell",
+        "label": "C/C++: g++ build active file",
+        "command": "/usr/bin/g++",
+        "args": [
+            "-g",
+            "${file}",
+            "-o",
+            "${fileDirname}/${fileBasenameNoExtension}"
+        ],
+        "options": {
+            "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": [
+            "$gcc"
+        ],
+        "group": {
+            "kind": "build",
+            "isDefault": true
+        }
+    }, {
+        "type": "shell",
+        "label": "Clear: g++ build output file",
+        "command": "rm",
+        "args": [
+            "-f",
+            "${fileDirname}/${fileBasenameNoExtension}"
+        ],
+        "options": {
+            "cwd": "${workspaceFolder}"
+        }
+    }],
+    "version": "2.0.0"
+}
