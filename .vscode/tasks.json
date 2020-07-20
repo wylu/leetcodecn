@@ -7,7 +7,8 @@
             "-g",
             "${file}",
             "-o",
-            "${fileDirname}/${fileBasenameNoExtension}"
+            "${fileDirname}/out",
+            "-std=c++17"
         ],
         "options": {
             "cwd": "${workspaceFolder}"
@@ -25,6 +26,7 @@
         "command": "rm",
         "args": [
             "-f",
+            "${fileDirname}/out",
             "${fileDirname}/${fileBasenameNoExtension}"
         ],
         "options": {
