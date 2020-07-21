@@ -17,9 +17,9 @@ func Test_searchMatrix(t *testing.T) {
 			name: "Case 1",
 			args: args{
 				matrix: [][]int{
-					[]int{1, 3, 5, 7},
-					[]int{10, 11, 16, 20},
-					[]int{23, 30, 34, 50},
+					{1, 3, 5, 7},
+					{10, 11, 16, 20},
+					{23, 30, 34, 50},
 				},
 				target: 13,
 			},
