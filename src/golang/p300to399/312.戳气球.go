@@ -58,23 +58,31 @@ package p300to399
  * State Transition:
  *   设 k 为 i 到 j 之间最后被戳破的气球，则有：
  *   dp[i][j] = dp[i][k−1] + dp[k+1][j] + nums[i−1]∗nums[k]∗nums[j+1] (i<=k<=j)
+ *
+ *   采用自底向上的方法计算，首先计算区间长度为 1 的值，然后逐步扩展到 n，
+ *   则 dp[1][n] 为最终结果。
  */
 // @lc code=start
 func maxCoins(nums []int) int {
+	if nums == nil {
+		return -1
+	}
+
 	n := len(nums)
+	nums = append([]int{1}, nums...)
+	nums = append(nums, 1)
+
 	dp := make([][]int, n+2)
 	for i := 0; i < n+2; i++ {
 		dp[i] = make([]int, n+2)
 	}
 
-	nums = append([]int{1}, nums...)
-	nums = append(nums, 1)
-
 	for ln := 1; ln <= n; ln++ {
 		for i := 1; i <= n-ln+1; i++ {
 			j := i + ln - 1
 			for k := i; k <= j; k++ {
-				dp[i][j] = max312(dp[i][j], dp[i][k-1]+dp[k+1][j]+nums[i-1]*nums[k]*nums[j+1])
+				delta := nums[i-1] * nums[k] * nums[j+1]
+				dp[i][j] = max312(dp[i][j], dp[i][k-1]+dp[k+1][j]+delta)
 			}
 		}
 	}
@@ -90,3 +98,87 @@ func max312(x, y int) int {
 }
 
 // @lc code=end
+
+// Vesion 2: 记忆化递归（备忘录法）自顶向下
+// func maxCoins(nums []int) int {
+// 	if nums == nil {
+// 		return -1
+// 	}
+
+// 	n := len(nums)
+// 	nums = append([]int{1}, nums...)
+// 	nums = append(nums, 1)
+
+// 	dp := make([][]int, n+2)
+// 	for i := 0; i < n+2; i++ {
+// 		dp[i] = make([]int, n+2)
+// 	}
+
+// 	return burst(nums, 1, n, &dp)
+// }
+
+// func burst(nums []int, i, j int, dp *[][]int) int {
+// 	if i > j {
+// 		return 0
+// 	}
+// 	if (*dp)[i][j] > 0 {
+// 		return (*dp)[i][j]
+// 	}
+
+// 	for k := i; k <= j; k++ {
+// 		left := burst(nums, i, k-1, dp)
+// 		right := burst(nums, k+1, j, dp)
+// 		delta := nums[i-1] * nums[k] * nums[j+1]
+// 		(*dp)[i][j] = max312((*dp)[i][j], left+right+delta)
+// 	}
+
+// 	return (*dp)[i][j]
+// }
+
+// func max312(x, y int) int {
+// 	if x > y {
+// 		return x
+// 	}
+// 	return y
+// }
+
+// Vesion 1: 回溯法暴破 TLE
+// func maxCoins(nums []int) int {
+// 	if nums == nil || len(nums) == 0 {
+// 		return 0
+// 	}
+// 	ans := 0
+// 	burst(&nums, 0, &ans)
+// 	return ans
+// }
+
+// func burst(nums *[]int, coins int, ans *int) {
+// 	if len(*nums) == 0 {
+// 		(*ans) = max312(*ans, coins)
+// 		return
+// 	}
+
+// 	for i := 0; i < len(*nums); i++ {
+// 		tmp := (*nums)[i]
+// 		delta := (*nums)[i]
+// 		if i-1 >= 0 {
+// 			delta *= (*nums)[i-1]
+// 		}
+// 		if i+1 < len(*nums) {
+// 			delta *= (*nums)[i+1]
+// 		}
+
+// 		(*nums) = append((*nums)[:i], (*nums)[i+1:]...)
+// 		burst(nums, coins+delta, ans)
+// 		rear := append([]int{}, (*nums)[i:]...)
+// 		(*nums) = append((*nums)[:i], tmp)
+// 		(*nums) = append(*nums, rear...)
+// 	}
+// }
+
+// func max312(x, y int) int {
+// 	if x > y {
+// 		return x
+// 	}
+// 	return y
+// }
