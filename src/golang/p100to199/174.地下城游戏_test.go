@@ -16,9 +16,9 @@ func Test_calculateMinimumHP(t *testing.T) {
 			name: "Case 1",
 			args: args{
 				dungeon: [][]int{
-					[]int{-2, -3, 3},
-					[]int{-5, -10, 1},
-					[]int{10, 30, -5},
+					{-2, -3, 3},
+					{-5, -10, 1},
+					{10, 30, -5},
 				},
 			},
 			want: 7,
@@ -28,7 +28,7 @@ func Test_calculateMinimumHP(t *testing.T) {
 			name: "Case 2",
 			args: args{
 				dungeon: [][]int{
-					[]int{0},
+					{0},
 				},
 			},
 			want: 1,
