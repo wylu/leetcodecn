@@ -11,6 +11,9 @@
 		"C_Cpp.default.intelliSenseMode": "gcc-x64",
 		"code-runner.clearPreviousOutput": true,
 		"code-runner.runInTerminal": true,
-		"code-runner.saveFileBeforeRun": true
+		"code-runner.saveFileBeforeRun": true,
+		"files.associations": {
+			"*.tcc": "cpp"
+		}
 	}
 }
