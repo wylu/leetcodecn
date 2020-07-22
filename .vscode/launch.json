@@ -3,24 +3,50 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [{
-        "name": "g++ - Build and debug active file",
-        "type": "cppdbg",
-        "request": "launch",
-        "program": "${fileDirname}/out",
-        "args": [],
-        "stopAtEntry": false,
-        "cwd": "${workspaceFolder}",
-        "environment": [],
-        "externalConsole": false,
-        "MIMode": "gdb",
-        "setupCommands": [{
-            "description": "Enable pretty-printing for gdb",
-            "text": "-enable-pretty-printing",
-            "ignoreFailures": true
-        }],
-        "preLaunchTask": "C/C++: g++ build active file",
-        "postDebugTask": "Clear: g++ build output file",
-        "miDebuggerPath": "/usr/bin/gdb"
-    }]
+    "configurations": [
+        {
+            "name": "Linux (gdb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Linux: g++ build active file",
+            "postDebugTask": "Linux: clear build file",
+        },
+        {
+            "name": "Win32 (gdb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\out.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "D:\\mingw64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Win32: g++ build active file",
+            "postDebugTask": "Win32: clear build file",
+        }
+    ]
 }

@@ -1,6 +1,16 @@
 {
-	"folders": [{
-		"path": "."
-	}],
-	"settings": {}
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"C_Cpp.clang_format_fallbackStyle": "{BasedOnStyle: Google, IndentWidth: 4, IndentCaseLabels: false, AccessModifierOffset: -4}",
+		"C_Cpp.default.cppStandard": "c++17",
+		"C_Cpp.default.cStandard": "c11",
+		"C_Cpp.default.intelliSenseMode": "gcc-x64",
+		"code-runner.clearPreviousOutput": true,
+		"code-runner.runInTerminal": true,
+		"code-runner.saveFileBeforeRun": true
+	}
 }
