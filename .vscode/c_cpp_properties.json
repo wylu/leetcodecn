@@ -14,15 +14,13 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}\\**",
-                "${vcpkgRoot}\\x64-windows\\include"
+                "${workspaceFolder}\\**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "D:\\mingw64\\bin\\g++.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
