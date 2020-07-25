@@ -5,7 +5,7 @@
  * @Version :   1.0
  * @Contact :   15wylu@gmail.com
  * @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
- * @Desc    :
+ * @Desc    :   https://leetcode-cn.com/explore/featured/card/top-interview-questions-easy/1/array/22/
  */
 
 #include <vector>
