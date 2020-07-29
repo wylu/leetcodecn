@@ -50,22 +50,41 @@
 # 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−2^31,  2^31 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
 #
 #
+"""
+解题思路
+取余%实现弹出
+开始对负数直接取余，发现会出错（可能就我这个小白不知道），改成了对绝对值操作，最后在返回值加符号
+然后在累加结果前做溢出判断，在加之后在判断不符合题目描述的 ‘环境只能存储得下 32 位的有符号整数’
+
+代码
+
+class Solution(object):
+    def reverse(self, x):
+        rev=0
+        max=1<<31 if x<0 else (1<<31)-1
+        absx=abs(x)
+        while absx!=0:
+            pop=absx%10
+            absx=absx//10
+            if rev>(max//10) or (rev==max//10 and pop>max%10):
+                return 0
+            rev=rev*10+pop
+        return (rev if x>0 else -rev)
+"""
 
 
 # @lc code=start
 class Solution:
     def reverse(self, x: int) -> int:
-        MAX_INT32, MIN_INT32 = 0x7FFFFFFF, -0x80000000
+        MAX = (1 << 31) if x < 0 else (1 << 31) - 1
         sign = 1 if x >= 0 else -1
-        x, ans = abs(x), 0
+        ans, x = 0, abs(x)
 
         while x != 0:
             pop = x % 10
             x //= 10
 
-            if ans > MAX_INT32 // 10 or (ans == MAX_INT32 and pop > 7):
-                return 0
-            if ans < MIN_INT32 // 10 or (ans == MIN_INT32 and pop < -8):
+            if ans > MAX // 10 or (ans == MAX // 10 and pop > MAX % 10):
                 return 0
 
             ans = ans * 10 + pop
@@ -78,3 +97,4 @@ class Solution:
 if __name__ == '__main__':
     solu = Solution()
     print(solu.reverse(-123))
+    print(solu.reverse(1463847412))
