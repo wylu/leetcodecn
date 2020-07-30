@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@File    :   实现strStr().py
+@File    :   实现strStr.py
 @Time    :   2020/07/30 12:43:53
 @Author  :   wylu
 @Version :   1.0
@@ -44,3 +44,8 @@ class Solution:
                 k = next[k]
 
         return next
+
+
+if __name__ == '__main__':
+    solu = Solution()
+    print(solu.strStr('MBCDMBCDABDEF', 'MBCDABD'))
