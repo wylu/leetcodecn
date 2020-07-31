@@ -86,37 +86,131 @@
 #
 #
 #
+"""
+确定有限状态机（deterministic finite automaton, DFA）
+
+思路:
+
+字符串处理的题目往往涉及复杂的流程以及条件情况，如果直接上手写程序，一不
+小心就会写出极其臃肿的代码。因此，为了有条理地分析每个输入字符的处理方法，
+我们可以使用自动机这个概念：
+
+我们的程序在每个时刻有一个状态 s，每次从序列中输入一个字符 c，并根据字符
+c 转移到下一个状态 s'。这样，我们只需要建立一个覆盖所有情况的从 s 与 c
+映射到 s' 的表格即可解决题目中的问题。
+
+算法:
+
+本题可以建立如下的自动机：
+
++--------------------------------------+
+|      |  ' '     +/-     num    other |
+|------+-------------------------------+
+|start |  start   sign    num    end   |
+|sign  |  end     end     num    end   |
+|num   |  end     end     num    end   |
+|end   |  end     end     end	 end   |
++--------------------------------------+
+"""
 
 
 # @lc code=start
+class Automation(object):
+    MAX_INT32 = (1 << 31) - 1
+    MIN_INT32 = -(1 << 31)
+
+    def __init__(self):
+        # Intial State: 'start'
+        self.state = 0
+
+        self.ans = 0
+        self.sign = 1
+        self.MAX = (1 << 31) - 1
+        self.overflow = False
+        # 0: start, 1: sign, 2: num, 3: end
+        self.table = (
+            (0, 1, 2, 3),
+            (3, 3, 2, 3),
+            (3, 3, 2, 3),
+            (3, 3, 3, 3),
+        )
+
+    def getCol(self, c: str):
+        if c == ' ':
+            return 0
+        elif c == '+' or c == '-':
+            return 1
+        elif c.isdigit():
+            return 2
+        else:
+            return 3
+
+    def getState(self, c: str):
+        self.state = self.table[self.state][self.getCol(c)]
+
+        if self.state == 1:
+            self.sign = 1 if c != '-' else -1
+            if self.sign == -1:
+                self.MAX = 1 << 31
+
+        elif self.state == 2:
+            c = ord(c) - ord('0')
+
+            if self.ans > self.MAX // 10 or (self.ans == self.MAX // 10
+                                             and c > self.MAX % 10):
+                self.overflow = True
+                self.state = 3
+                return self.state
+
+            self.ans = self.ans * 10 + c
+
+        return self.state
+
+
 class Solution:
     def myAtoi(self, s: str) -> int:
-        if not s:
-            return 0
-
-        s = s.strip()
-        if not s or (s[0] != '-' and s[0] != '+' and not s[0].isdigit()):
-            return 0
-
-        sign = 1 if s[0] != '-' else -1
-        if s[0] == '-' or s[0] == '+':
-            s = s[1:]
-
-        MAX_INT32, MIN_INT32 = (1 << 31) - 1, -(1 << 31)
-        MAX = (1 << 31) - 1 if sign == 1 else (1 << 31)
-
-        ans = 0
+        auto = Automation()
         for c in s:
-            if not c.isdigit():
-                break
+            if auto.getState(c) != 3:
+                continue
 
-            c = ord(c) - ord('0')
-            if ans > MAX // 10 or (ans == MAX // 10 and c > MAX % 10):
-                return MAX_INT32 if sign == 1 else MIN_INT32
+            if auto.overflow:
+                return auto.MAX_INT32 if auto.sign == 1 else auto.MIN_INT32
 
-            ans = ans * 10 + c
-
-        return sign * ans
+        return auto.sign * auto.ans
 
 
 # @lc code=end
+
+# class Solution:
+#     def myAtoi(self, s: str) -> int:
+#         if not s:
+#             return 0
+
+#         s = s.strip()
+#         if not s or (s[0] != '-' and s[0] != '+' and not s[0].isdigit()):
+#             return 0
+
+#         sign = 1 if s[0] != '-' else -1
+#         if s[0] == '-' or s[0] == '+':
+#             s = s[1:]
+
+#         MAX_INT32, MIN_INT32 = (1 << 31) - 1, -(1 << 31)
+#         MAX = (1 << 31) - 1 if sign == 1 else (1 << 31)
+
+#         ans = 0
+#         for c in s:
+#             if not c.isdigit():
+#                 break
+
+#             c = ord(c) - ord('0')
+#             if ans > MAX // 10 or (ans == MAX // 10 and c > MAX % 10):
+#                 return MAX_INT32 if sign == 1 else MIN_INT32
+
+#             ans = ans * 10 + c
+
+#         return sign * ans
+
+if __name__ == '__main__':
+    solu = Solution()
+    print(solu.myAtoi('42'))
