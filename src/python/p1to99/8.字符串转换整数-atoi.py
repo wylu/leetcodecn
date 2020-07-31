@@ -149,8 +149,8 @@ class Automation(object):
         self.state = self.table[self.state][self.getCol(c)]
 
         if self.state == 1:
-            self.sign = 1 if c != '-' else -1
-            if self.sign == -1:
+            if c == '-':
+                self.sign = -1
                 self.MAX = 1 << 31
 
         elif self.state == 2:
