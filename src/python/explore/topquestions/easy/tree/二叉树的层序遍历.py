@@ -35,10 +35,10 @@ class Solution:
             level.append(cur.val)
 
             if cur.left:
-                que.put(cur.left)
+                que.append(cur.left)
                 nextTail = cur.left
             if cur.right:
-                que.put(cur.right)
+                que.append(cur.right)
                 nextTail = cur.right
 
             if cur == curTail:
