@@ -9,7 +9,7 @@
 @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
 @Desc    :
 """
-from queue import SimpleQueue
+from collections import deque
 from typing import List
 
 
@@ -27,11 +27,11 @@ class Solution:
             return []
 
         ans = []
-        que = SimpleQueue()
-        que.put(root)
+        que = deque()
+        que.append(root)
         curTail, nextTail, level = root, None, []
-        while not que.empty():
-            cur = que.get()
+        while que:
+            cur = que.popleft()
             level.append(cur.val)
 
             if cur.left:
