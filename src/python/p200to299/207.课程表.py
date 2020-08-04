@@ -98,7 +98,7 @@ class Solution:
         ind = [0] * numCourses
         graph = {}
         # 计算每个节点的入度
-        for u, v in prerequisites:
+        for v, u in prerequisites:
             ind[v] += 1
 
             # 同时建图
