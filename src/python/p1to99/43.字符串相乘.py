@@ -77,10 +77,10 @@ M+N，num1[i] * num2[j] 的结果为 tmp(位数为两位，"0x","xy"的形式)�
 # @lc code=start
 class Solution:
     def multiply(self, num1: str, num2: str) -> str:
-        if not num1 or num1 == '0':
-            return num2
-        if not num2 or num2 == '0':
-            return num1
+        if not num1 or not num2:
+            return ''
+        if num1 == '0' or num2 == '0':
+            return '0'
 
         l1, l2 = len(num1), len(num2)
         ans = [0] * (l1 + l2)
@@ -91,7 +91,8 @@ class Solution:
                 n2 = int(num2[j])
 
                 tmp = ans[i + j + 1] + n1 * n2
-                ans[i + j], ans[i + j + 1] = divmod(tmp, 10)
+                ans[i + j + 1] = tmp % 10
+                ans[i + j] += tmp // 10
 
         k = 0
         while ans[k] == 0:
@@ -105,3 +106,4 @@ class Solution:
 if __name__ == '__main__':
     solu = Solution()
     print(solu.multiply('123', '456'))
+    print(solu.multiply('123', '0'))
