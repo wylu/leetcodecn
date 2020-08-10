@@ -62,29 +62,49 @@
 # @lc code=start
 class Solution:
     def countBinarySubstrings(self, s: str) -> int:
-        n = len(s)
         ans = 0
+        pre, cur = 0, 1
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
+                cur += 1
+                continue
 
-        def count(i: int, j: int) -> int:
-            cnt = 1
-            while i > 0 and j < n - 1:
-                i -= 1
-                j += 1
-                if s[i] == s[i + 1] and s[j - 1] == s[j]:
-                    cnt += 1
-                else:
-                    break
-            return cnt
+            if pre != 0:
+                ans += min(pre, cur)
 
-        for i in range(1, n):
-            if s[i] != s[i - 1]:
-                ans += count(i - 1, i)
+            pre = cur
+            cur = 1
+
+        ans += min(pre, cur)
 
         return ans
 
 
 # @lc code=end
 
+# class Solution:
+#     def countBinarySubstrings(self, s: str) -> int:
+#         n = len(s)
+#         ans = 0
+
+#         def count(i: int, j: int) -> int:
+#             cnt = 1
+#             while i > 0 and j < n - 1:
+#                 i -= 1
+#                 j += 1
+#                 if s[i] == s[i + 1] and s[j - 1] == s[j]:
+#                     cnt += 1
+#                 else:
+#                     break
+#             return cnt
+
+#         for i in range(1, n):
+#             if s[i] != s[i - 1]:
+#                 ans += count(i - 1, i)
+
+#         return ans
+
 if __name__ == '__main__':
     solu = Solution()
     print(solu.countBinarySubstrings('000111000'))
+    print(solu.countBinarySubstrings('00'))
