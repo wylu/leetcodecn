@@ -93,7 +93,12 @@ class Solution:
             return indices.get(s[left:right + 1], -1)
 
         def isPalindrome(s: str, left: int, right: int) -> bool:
-            return (sub := s[left:right+1]) == sub[::-1]
+            while left < right:
+                if s[left] != s[right]:
+                    return False
+                left += 1
+                right -= 1
+            return True
 
         n = len(words)
         indices = {words[i][::-1]: i for i in range(n)}
@@ -103,16 +108,16 @@ class Solution:
             m = len(words[i])
             for j in range(m + 1):
                 # 判断后缀是否为回文
-                if isPalindrome(words[i], j, m-1):
-                    leftId = findWord(words[i], 0, j - 1)
-                    if leftId != -1 and leftId != i:
-                        ans.append([i, leftId])
+                if isPalindrome(words[i], j, m - 1):
+                    rightId = findWord(words[i], 0, j - 1)
+                    if rightId != -1 and rightId != i:
+                        ans.append([i, rightId])
 
                 # 判断前缀是否为回文
                 if j and isPalindrome(words[i], 0, j - 1):
-                    rightId = findWord(words[i], j, m - 1)
-                    if rightId != -1 and rightId != i:
-                        ans.append([rightId, i])
+                    leftId = findWord(words[i], j, m - 1)
+                    if leftId != -1 and leftId != i:
+                        ans.append([leftId, i])
 
         return ans
 
