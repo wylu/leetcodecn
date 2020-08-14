@@ -35,8 +35,11 @@ class Solution:
         if not root:
             return
 
+        # 访问当前树的根结点
         res.append(root.val)
+        # 遍历左子树
         cls.recursive(root.left, res)
+        # 遍历右子树
         cls.recursive(root.right, res)
 
     def iterateTraversal(self, root: TreeNode) -> List[int]:
@@ -44,7 +47,7 @@ class Solution:
 
     @classmethod
     def iterate(cls, root: TreeNode) -> List[int]:
-        """迭代地前序遍历
+        """迭代地进行前序遍历
 
         创建一个辅助栈：
         1.将根结点压入栈
