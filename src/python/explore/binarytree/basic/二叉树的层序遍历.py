@@ -27,25 +27,51 @@ class Solution:
             return []
 
         ans = []
-        cur_tail, next_tail, level = root, None, []
         que = deque()
         que.append(root)
 
         while que:
-            node = que.popleft()
-            level.append(node.val)
+            level, size = [], len(que)
 
-            if node.left:
-                next_tail = node.left
-                que.append(node.left)
+            for _ in range(size):
+                node = que.popleft()
+                level.append(node.val)
 
-            if node.right:
-                next_tail = node.right
-                que.append(node.right)
+                if node.left:
+                    que.append(node.left)
+                if node.right:
+                    que.append(node.right)
 
-            if node == cur_tail:
-                cur_tail = next_tail
-                ans.append(level)
-                level = []
+            ans.append(level)
 
         return ans
+
+
+# class Solution:
+#     def levelOrder(self, root: TreeNode) -> List[List[int]]:
+#         if not root:
+#             return []
+
+#         ans = []
+#         cur_tail, next_tail, level = root, None, []
+#         que = deque()
+#         que.append(root)
+
+#         while que:
+#             node = que.popleft()
+#             level.append(node.val)
+
+#             if node.left:
+#                 next_tail = node.left
+#                 que.append(node.left)
+
+#             if node.right:
+#                 next_tail = node.right
+#                 que.append(node.right)
+
+#             if node == cur_tail:
+#                 cur_tail = next_tail
+#                 ans.append(level)
+#                 level = []
+
+#         return ans
