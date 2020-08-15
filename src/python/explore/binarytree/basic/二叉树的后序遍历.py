@@ -9,15 +9,18 @@
 @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
 @Desc    :
 """
+import os
+import sys
+import unittest
+
 from typing import List
 
+cur_dir = os.path.dirname(os.path.abspath(__file__))
+py_dir = os.path.abspath(os.path.join(cur_dir, *(['..'] * 3)))
+sys.path.append(py_dir)
 
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+from common.treenode import mkTreeFromInAndPost  # noqa: E402
+from common.treenode import TreeNode  # noqa: E402
 
 
 class Solution:
@@ -77,3 +80,23 @@ class Solution:
 
         res.reverse()
         return res
+
+
+class TestPreorder(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.ino = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        cls.post = [1, 3, 2, 5, 7, 6, 4, 9, 11, 10, 13, 15, 16, 14, 12, 8]
+        cls.root = mkTreeFromInAndPost(cls.ino, cls.post)
+
+    def test_recursive_traversal(self):
+        ans = Solution().recursiveTraversal(self.root)
+        self.assertListEqual(ans, self.post)
+
+    def test_iterate_traversal(self):
+        ans = Solution().iterateTraversal(self.root)
+        self.assertListEqual(ans, self.post)
+
+
+if __name__ == '__main__':
+    unittest.main()
