@@ -68,6 +68,7 @@ State:
 
 Initial State:
   得到初始化条件dp[l][r][k] = dp[l][r-1][0] + (k+1)*(k+1)
+  特别地，当 l == r 时，dp[l][r][k] = 0 + (k+1)*(k+1)
 
 State Transition:
   但是有可能在 boxes[l]~boxes[r-1] 中也存在和 boxes[r]相同值的元素，有可能
