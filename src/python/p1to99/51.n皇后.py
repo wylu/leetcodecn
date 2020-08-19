@@ -63,8 +63,18 @@
 #
 #
 #
-from copy import deepcopy
 from typing import List
+"""
+两个有用的细节。
+
+（1）一行只可能有一个皇后且一列也只可能有一个皇后。这意味着没有必要
+在棋盘上考虑所有的方格。只需要按列循环即可。
+（2）对于所有的主对角线有 行号 + 列号 = 常数，对于所有的次对角线有
+行号 - 列号 = 常数。
+
+这可以让我们标记已经在攻击范围下的对角线并且检查一个方格 (行号, 列号) 
+是否处在攻击位置。
+"""
 
 
 # @lc code=start
@@ -73,39 +83,68 @@ class Solution:
         if n <= 0:
             return []
 
-        def ok(cur: List[List[str]], x: int, y: int) -> bool:
-            for i in range(n):
-                if ((cur[x][i] == 'Q' and i != y)
-                        or (cur[i][y] == 'Q' and i != x)):
-                    return False
-            l, r = y - 1, y + 1
-            for i in range(x - 1, -1, -1):
-                if ((l >= 0 and cur[x][l] == 'Q')
-                        or (r < n and cur[x][r] == 'Q')):
-                    return False
-            return True
+        def ok(x: int, y: int) -> bool:
+            return not bool(cols[y] + hills[x - y] + dales[x + y])
 
-        def dfs(cur: List[List[str]], i: int, cnt: int) -> None:
-            if i >= n:
-                if cnt == n:
-                    ans.append(deepcopy(cur))
+        def dfs(x: int) -> None:
+            if x == n:
+                ans.append([''.join(r) for r in cur])
                 return
 
-            for j in range(n):
-                cur[i][j] = 'Q'
-                if ok(cur, i, j):
-                    dfs(cur, i + 1, cnt + 1)
-                cur[i][j] = '.'
+            for y in range(n):
+                if ok(x, y):
+                    cur[x][y] = 'Q'
+                    cols[y], hills[x - y], dales[x + y] = 1, 1, 1
+                    dfs(x + 1)
+                    cur[x][y] = '.'
+                    cols[y], hills[x - y], dales[x + y] = 0, 0, 0
 
-        ans = []
-        dfs([['.'] * n for _ in range(n)], 0, 0)
+        cols, hills, dales = [0] * n, [0] * (2 * n - 1), [0] * (2 * n - 1)
+        ans, cur = [], [['.'] * n for _ in range(n)]
+        dfs(0)
         return ans
 
 
 # @lc code=end
+
+# class Solution:
+#     def solveNQueens(self, n: int) -> List[List[str]]:
+#         if n <= 0:
+#             return []
+
+#         def ok(x: int, y: int) -> bool:
+#             for i in range(x - 1, -1, -1):
+#                 if cur[i][y] == 'Q':
+#                     return False
+#             l, r = y - 1, y + 1
+#             for i in range(x - 1, -1, -1):
+#                 if ((l >= 0 and cur[i][l] == 'Q')
+#                         or (r < n and cur[i][r] == 'Q')):
+#                     return False
+#                 l -= 1  # noqa E741
+#                 r += 1
+#             return True
+
+#         def dfs(i: int) -> None:
+#             if i == n:
+#                 ans.append([''.join(r) for r in cur])
+#                 return
+
+#             for j in range(n):
+#                 cur[i][j] = 'Q'
+#                 if ok(i, j):
+#                     dfs(i + 1)
+#                 cur[i][j] = '.'
+
+#         ans = []
+#         cur = [['.'] * n for _ in range(n)]
+#         dfs(0)
+#         return ans
 
 if __name__ == '__main__':
     from pprint import pprint
 
     solu = Solution()
     pprint(solu.solveNQueens(4))
+    # pprint(solu.solveNQueens(5))
+    # pprint(solu.solveNQueens(8))
