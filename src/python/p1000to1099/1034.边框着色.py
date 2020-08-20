@@ -1,0 +1,161 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+@File    :   1034.边框着色.py
+@Time    :   2020/08/20 22:25:59
+@Author  :   wylu
+@Version :   1.0
+@Contact :   15wylu@gmail.com
+@License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
+@Desc    :
+"""
+
+#
+# @lc app=leetcode.cn id=1034 lang=python3
+#
+# [1034] 边框着色
+#
+# https://leetcode-cn.com/problems/coloring-a-border/description/
+#
+# algorithms
+# Medium (42.40%)
+# Likes:    16
+# Dislikes: 0
+# Total Accepted:    2.3K
+# Total Submissions: 5.4K
+# Testcase Example:  '[[1,1],[1,2]]\n0\n0\n3'
+#
+# 给出一个二维整数网格 grid，网格中的每个值表示该位置处的网格块的颜色。
+#
+# 只有当两个网格块的颜色相同，而且在四个方向中任意一个方向上相邻时，它们属于同一连通分量。
+#
+# 连通分量的边界是指连通分量中的所有与不在分量中的正方形相邻（四个方向上）的所有正方形，或者在网格的边界上（第一行/列或最后一行/列）的所有正方形。
+#
+# 给出位于 (r0, c0) 的网格块和颜色 color，使用指定颜色 color 为所给网格块的连通分量的边界进行着色，并返回最终的网格 grid
+# 。
+#
+#
+#
+# 示例 1：
+#
+# 输入：grid = [[1,1],[1,2]], r0 = 0, c0 = 0, color = 3
+# 输出：[[3, 3], [3, 2]]
+#
+#
+# 示例 2：
+#
+# 输入：grid = [[1,2,2],[2,3,2]], r0 = 0, c0 = 1, color = 3
+# 输出：[[1, 3, 3], [2, 3, 3]]
+#
+#
+# 示例 3：
+#
+# 输入：grid = [[1,1,1],[1,1,1],[1,1,1]], r0 = 1, c0 = 1, color = 2
+# 输出：[[2, 2, 2], [2, 1, 2], [2, 2, 2]]
+#
+#
+#
+# 提示：
+#
+#
+# 1 <= grid.length <= 50
+# 1 <= grid[0].length <= 50
+# 1 <= grid[i][j] <= 1000
+# 0 <= r0 < grid.length
+# 0 <= c0 < grid[0].length
+# 1 <= color <= 1000
+#
+#
+#
+#
+#
+from typing import List
+
+
+# @lc code=start
+class Solution:
+    def colorBorder(self, grid: List[List[int]], r0: int, c0: int,
+                    color: int) -> List[List[int]]:
+        def dfs(x: int, y: int) -> None:
+            visited[x][y] = True
+            if x == 0 or x == n - 1 or y == 0 or y == m - 1:
+                grid[x][y] = color
+
+            for i in range(4):
+                nx, ny = x + d[i], y + d[i + 1]
+                if 0 <= nx < n and 0 <= ny < m and not visited[nx][ny]:
+                    if grid[nx][ny] == origin:
+                        dfs(nx, ny)
+                    else:
+                        grid[x][y] = color
+
+        d = (0, 1, 0, -1, 0)
+        n, m = len(grid), len(grid[0])
+        visited = [[False] * m for _ in range(n)]
+        origin = grid[r0][c0]
+
+        if origin == color:
+            return grid
+
+        dfs(r0, c0)
+        return grid
+
+
+# @lc code=end
+
+# class Solution:
+#     def colorBorder(self, grid: List[List[int]], r0: int, c0: int,
+#                     color: int) -> List[List[int]]:
+#         def ok(x: int, y: int) -> bool:
+#             return 0 <= x < n and 0 <= y < m
+
+#         def dfs(x: int, y: int) -> None:
+#             if not ok(x, y) or grid[x][y] != origin or visited[x][y]:
+#                 return
+
+#             visited[x][y] = True
+#             for i in range(4):
+#                 nx, ny = x + d[i], y + d[i + 1]
+#                 if (not ok(nx, ny)
+#                         or (grid[nx][ny] != origin and grid[nx][ny] != color)
+#                         or (grid[nx][ny] == color and not visited[nx][ny])):
+#                     grid[x][y] = color
+#                     break
+
+#             for i in range(4):
+#                 dfs(x + d[i], y + d[i + 1])
+
+#         d = (0, 1, 0, -1, 0)
+#         n, m = len(grid), len(grid[0])
+#         visited = [[False] * m for _ in range(n)]
+#         origin = grid[r0][c0]
+
+#         if origin == color:
+#             return grid
+
+#         dfs(r0, c0)
+#         return grid
+
+if __name__ == '__main__':
+    from pprint import pprint
+
+    solu = Solution()
+    mGrid = [[1, 1], [1, 2]]
+    solu.colorBorder(mGrid, 0, 0, 3)
+    pprint(mGrid)
+
+    mGrid = [[1, 2, 2], [2, 3, 2]]
+    solu.colorBorder(mGrid, 0, 1, 3)
+    pprint(mGrid)
+
+    mGrid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+    solu.colorBorder(mGrid, 1, 1, 2)
+    pprint(mGrid)
+
+    mGrid = [[1, 2, 1], [1, 2, 2], [2, 2, 1]]
+    solu.colorBorder(mGrid, 1, 1, 2)
+    pprint(mGrid)
+
+    mGrid = [[1, 2, 1, 2, 1, 2], [2, 2, 2, 2, 1, 2], [1, 2, 2, 2, 1, 2]]
+    solu.colorBorder(mGrid, 1, 3, 1)
+    pprint(mGrid)
