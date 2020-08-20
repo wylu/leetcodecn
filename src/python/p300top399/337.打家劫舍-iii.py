@@ -48,7 +48,7 @@
 #
 # 输入: [3,4,5,1,3,null,1]
 #
-# 3
+#     3
 # ⁠   / \
 # ⁠  4   5
 # ⁠ / \   \
@@ -59,7 +59,6 @@
 #
 #
 #
-from typing import List
 """
 动态规划 DFS
 
@@ -89,9 +88,9 @@ class Solution:
     def rob(self, root: TreeNode) -> int:
         return max(self._rob(root))
 
-    def _rob(self, root: TreeNode) -> List[int]:
+    def _rob(self, root: TreeNode) -> tuple:
         if not root:
-            return (0, 0)
+            return 0, 0
 
         left = self._rob(root.left)
         right = self._rob(root.right)
