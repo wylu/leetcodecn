@@ -62,8 +62,9 @@ from typing import List
 Dynamic Programing
 
 State:
-  dp[i][0]: 表示不偷窃 i+1 号房屋所能得到的最高金额
-  dp[i][1]: 表示偷窃 i+1 号房屋所能得到的最高金额
+  0 <= i < n-1
+  dp[i][0]: 表示前 i+1 个房屋且不偷窃 i+1 号房屋所能得到的最高金额
+  dp[i][1]: 表示前 i+1 个房屋且偷窃 i+1 号房屋所能得到的最高金额
 
 Initial State:
   dp[0][0] = 0
