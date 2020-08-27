@@ -50,6 +50,8 @@
 # 解释: 另一种有效的行程是 ["JFK","SFO","ATL","JFK","ATL","SFO"]。但是它自然排序更大更靠后。
 #
 #
+import heapq
+
 from typing import List
 """
 本题和 753. 破解保险箱 类似，是力扣平台上为数不多的求解欧拉回路、
@@ -160,7 +162,24 @@ Hierholzer 算法用于在连通图中寻找欧拉路径，其流程如下：
 # @lc code=start
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        pass
+        def dfs(cur: str) -> None:
+            if cur in edges:
+                while edges[cur]:
+                    dfs(heapq.heappop(edges[cur]))
+            stack.append(cur)
+
+        edges = {}
+        for u, v in tickets:
+            if u not in edges:
+                edges[u] = []
+            edges[u].append(v)
+
+        for u in edges.keys():
+            heapq.heapify(edges[u])
+
+        stack = []
+        dfs('JFK')
+        return stack[::-1]
 
 
 # @lc code=end
