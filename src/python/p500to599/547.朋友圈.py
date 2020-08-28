@@ -72,13 +72,23 @@ from typing import List
 # @lc code=start
 class Solution:
     def findCircleNum(self, matrix: List[List[int]]) -> int:
-        def dfs(x: int) -> None:
-            pass
+        def dfs(x: int) -> bool:
+            flag = False
+            friends = []
+            for y in range(n):
+                if matrix[x][y] == 1:
+                    flag = True
+                    friends.append(y)
+                    matrix[x][y] = matrix[y][x] = 0
+            for z in friends:
+                dfs(z)
+            return flag
 
         ans = 0
         n = len(matrix)
         for i in range(n):
-            dfs(i)
+            if dfs(i):
+                ans += 1
 
         return ans
 
