@@ -64,6 +64,8 @@
 #
 from typing import List
 """
+方法一：记忆化递归
+
 https://leetcode-cn.com/problems/predict-the-winner/solution/ling-he-bo-yi-ji-yi-hua-0ms-gao-ding-by-time-limit/
 
 什么是零和博弈? 无论采取何种策略，博弈双方的总得分不变。即一个人得分变多，
@@ -106,29 +108,67 @@ https://leetcode-cn.com/problems/predict-the-winner/solution/ling-he-bo-yi-ji-yi
 当 L < R 时，optimal(L, R) = sum(L, R) - min(optimal(L+1, R), optimal(L, R-1))
 
 sum(L, R) 表示 nums[L:R] 的累加和，min() 表示让对手进入最高分最低的那个局面。
+
+方法二：动态规划
+
+dp[i][j]：表示当数组剩下的部分为下标 i 到下标 j 时，当前玩家与另一个玩家的分数之差
+          的最大值，注意当前玩家不一定是先手。
+
+只有当 i <= j 时，数组剩下的部分才有意义，因此当 i > j 时，dp[i][j] = 0。
+
+当 i = j 时，只剩一个数字，当前玩家只能拿取这个数字，因此对于所有 0 <= i < len(nums)，
+都有 dp[i][i] = nums[i]。
+
+当 i < j 时，当前玩家可以选择 nums[i] 或 nums[j]，然后轮到另一个玩家在数组剩下的
+部分选取数字。在两种方案中，当前玩家会选择最优的方案，使得自己的分数最大化。因此
+可以得到如下状态转移方程：
+
+dp[i][j] = max(nums[i] − dp[i+1][j], nums[j] − dp[i][j−1])
+
+最后判断 dp[0][len(nums)−1] 的值，如果大于或等于 0，则先手得分大于或等于后手得分，
+因此先手成为赢家，否则后手成为赢家。
 """
 
 
 # @lc code=start
 class Solution:
     def PredictTheWinner(self, nums: List[int]) -> bool:
-        def dfs(l: int, r: int) -> int:  # noqa: E741
-            if dp[l][r] != -1:
-                return dp[l][r]
-
-            if l == r:  # noqa: E741
-                return nums[l]
-
-            dp[l][r] = ps[r + 1] - ps[l] - min(dfs(l + 1, r), dfs(l, r - 1))
-            return dp[l][r]
-
         n = len(nums)
-        ps = [0]
+        dp = [[0] * n for _ in range(n)]
         for i in range(n):
-            ps.append(ps[i] + nums[i])
+            dp[i][i] = nums[i]
 
-        dp = [[-1] * n for _ in range(n)]
-        return dfs(0, n - 1) * 2 >= ps[n]
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 1, n):
+                dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1])
+
+        return dp[0][n - 1] >= 0
 
 
 # @lc code=end
+
+# 方法一
+# class Solution:
+#     def PredictTheWinner(self, nums: List[int]) -> bool:
+#         def dfs(l: int, r: int) -> int:  # noqa: E741
+#             if dp[l][r] != -1:
+#                 return dp[l][r]
+
+#             if l == r:  # noqa: E741
+#                 return nums[l]
+
+#             dp[l][r] = ps[r + 1] - ps[l] - min(dfs(l + 1, r), dfs(l, r - 1))
+#             return dp[l][r]
+
+#         n = len(nums)
+#         ps = [0]
+#         for i in range(n):
+#             ps.append(ps[i] + nums[i])
+
+#         dp = [[-1] * n for _ in range(n)]
+#         return dfs(0, n - 1) * 2 >= ps[n]
+
+if __name__ == '__main__':
+    solu = Solution()
+    print(solu.PredictTheWinner([1, 5, 2]))
+    print(solu.PredictTheWinner([1, 5, 233, 7]))
