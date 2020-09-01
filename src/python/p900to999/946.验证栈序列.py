@@ -64,16 +64,12 @@ from typing import List
 class Solution:
     def validateStackSequences(self, pushed: List[int],
                                popped: List[int]) -> bool:
-        if len(pushed) != len(popped):
-            return False
-
-        i, j, n, stack = 0, 0, len(pushed), []
-        while i < n:
-            stack.append(pushed[i])
-            i += 1
-            while stack and stack[-1] == popped[j]:
+        i, stack = 0, []
+        for x in pushed:
+            stack.append(x)
+            while stack and stack[-1] == popped[i]:
                 stack.pop()
-                j += 1
+                i += 1
 
         return not stack
 
