@@ -69,8 +69,8 @@ from typing import List
 
 （1）一行只可能有一个皇后且一列也只可能有一个皇后。这意味着没有必要
 在棋盘上考虑所有的方格。只需要按列循环即可。
-（2）对于所有的主对角线有 行号 + 列号 = 常数，对于所有的次对角线有
-行号 - 列号 = 常数。
+（2）对于所有的主对角线有 行号 - 列号 = 常数，对于所有的次对角线有
+行号 + 列号 = 常数。
 
 这可以让我们标记已经在攻击范围下的对角线并且检查一个方格 (行号, 列号)
 是否处在攻击位置。
@@ -84,7 +84,7 @@ class Solution:
             return []
 
         def ok(x: int, y: int) -> bool:
-            return not bool(cols[y] + hills[x - y] + dales[x + y])
+            return not bool(cols[y] + dales[x - y] + hills[x + y])
 
         def dfs(x: int) -> None:
             if x == n:
@@ -94,12 +94,12 @@ class Solution:
             for y in range(n):
                 if ok(x, y):
                     cur[x][y] = 'Q'
-                    cols[y], hills[x - y], dales[x + y] = 1, 1, 1
+                    cols[y], dales[x - y], hills[x + y] = 1, 1, 1
                     dfs(x + 1)
                     cur[x][y] = '.'
-                    cols[y], hills[x - y], dales[x + y] = 0, 0, 0
+                    cols[y], dales[x - y], hills[x + y] = 0, 0, 0
 
-        cols, hills, dales = [0] * n, [0] * (2 * n - 1), [0] * (2 * n - 1)
+        cols, dales, hills = [0] * n, [0] * (2 * n - 1), [0] * (2 * n - 1)
         ans, cur = [], [['.'] * n for _ in range(n)]
         dfs(0)
         return ans
