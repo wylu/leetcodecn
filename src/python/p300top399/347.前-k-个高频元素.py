@@ -52,42 +52,84 @@
 #
 #
 #
+import heapq
+
 from typing import List
+"""
+方法一：堆
+
+思路与算法
+
+首先遍历整个数组，并使用哈希表记录每个数字出现的次数，并形成一个「出现次数数组」。
+找出原数组的前 k 个高频元素，就相当于找出「出现次数数组」的前 k 大的值。
+
+最简单的做法是给「出现次数数组」排序。但由于可能有 O(N) 个不同的出现次数
+（其中 N 为原数组长度），故总的算法复杂度会达到 O(NlogN)，不满足题目的要求。
+
+在这里，我们可以利用堆的思想：建立一个小顶堆，然后遍历「出现次数数组」：
+  - 如果堆的元素个数小于 k，就可以直接插入堆中。
+  - 如果堆的元素个数等于 k，则检查堆顶与当前出现次数的大小。
+    - 如果堆顶更大，说明至少有 k 个数字的出现次数比当前值大，故舍弃当前值；
+    - 否则，就弹出堆顶，并将当前值插入堆中。
+
+遍历完成后，堆中的元素就代表了「出现次数数组」中前 k 大的值。
+
+方法二：快速选择
+"""
 
 
 # @lc code=start
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        cnts = {}
+        num2cnt = {}
         for num in nums:
-            cnts[num] = cnts.get(num, 0) + 1
+            num2cnt[num] = num2cnt.get(num, 0) + 1
 
-        nums = [(key, val) for key, val in cnts.items()]
+        pq = []
+        heapq.heapify(pq)
 
-        def partition(s: int, e: int) -> int:
-            j = s - 1
-            for i in range(s, e):
-                if nums[i][1] > nums[e][1]:
-                    j += 1
-                    nums[i], nums[j] = nums[j], nums[i]
-            j += 1
-            nums[j], nums[e] = nums[e], nums[j]
-            return j
+        for num, cnt in num2cnt.items():
+            if len(pq) < k:
+                heapq.heappush(pq, (cnt, num))
+            elif cnt > pq[0][0]:
+                heapq.heappop(pq)
+                heapq.heappush(pq, (cnt, num))
 
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            idx = partition(left, right)
-            if idx + 1 == k:
-                return [key for key, _ in nums[:k]]
-            elif idx + 1 < k:
-                left = idx + 1
-            else:
-                right = idx - 1
-
-        return []
+        return [num for _, num in pq]
 
 
 # @lc code=end
+
+# 方法二：快速选择
+# class Solution:
+#     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+#         cnts = {}
+#         for num in nums:
+#             cnts[num] = cnts.get(num, 0) + 1
+
+#         nums = [(key, val) for key, val in cnts.items()]
+
+#         def partition(s: int, e: int) -> int:
+#             j = s - 1
+#             for i in range(s, e):
+#                 if nums[i][1] > nums[e][1]:
+#                     j += 1
+#                     nums[i], nums[j] = nums[j], nums[i]
+#             j += 1
+#             nums[j], nums[e] = nums[e], nums[j]
+#             return j
+
+#         left, right = 0, len(nums) - 1
+#         while left <= right:
+#             idx = partition(left, right)
+#             if idx + 1 == k:
+#                 return [key for key, _ in nums[:k]]
+#             elif idx + 1 < k:
+#                 left = idx + 1
+#             else:
+#                 right = idx - 1
+
+#         return []
 
 if __name__ == '__main__':
     solu = Solution()
