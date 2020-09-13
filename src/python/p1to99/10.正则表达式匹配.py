@@ -236,12 +236,12 @@ class Solution:
         for i in range(m + 1):
             for j in range(1, n + 1):
                 if p[j - 1] == '*':
-                    f[i][j] |= f[i][j - 2]
+                    f[i][j] = f[i][j - 2]
                     if matches(i - 1, j - 2):
                         f[i][j] |= f[i - 1][j]
                 else:
                     if matches(i - 1, j - 1):
-                        f[i][j] |= f[i - 1][j - 1]
+                        f[i][j] = f[i - 1][j - 1]
 
         return f[m][n]
 
