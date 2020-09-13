@@ -79,8 +79,9 @@ class Solution:
             if s[best + 1] == s[i]:
                 best += 1
 
-        add = '' if best == -1 else s[best + 1:]
-        return add[::-1] + s
+        # add = '' if best == -1 else s[best + 1:]
+        # return add[::-1] + s
+        return s[best + 1:][::-1] + s
 
 
 # @lc code=end
