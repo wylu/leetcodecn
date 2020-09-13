@@ -117,3 +117,4 @@ if __name__ == '__main__':
     solu = Solution()
     print(solu.majorityElement([3, 2, 3]))
     print(solu.majorityElement([1, 1, 1, 3, 3, 2, 2, 2]))
+    print(solu.majorityElement([3, 3, 3]))
