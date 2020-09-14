@@ -21,25 +21,18 @@ class ListNode:
 class Solution:
     def detectCycle(self, head: ListNode) -> ListNode:
         def hasCycle(head: ListNode) -> ListNode:
-            if not head:
-                return None
-
-            slow, fast = head, head
-            while fast and fast.next:
-                slow = slow.next
-                fast = fast.next.next
-                if slow == fast:
-                    return slow
-
-            return None
+            if head:
+                slow, fast = head, head
+                while fast and fast.next:
+                    slow = slow.next
+                    fast = fast.next.next
+                    if slow == fast:
+                        return slow
 
         fast = hasCycle(head)
-        if not fast:
-            return None
-
-        slow = head
-        while fast != slow:
-            slow = slow.next
-            fast = fast.next
-
-        return slow
+        if fast:
+            slow = head
+            while fast != slow:
+                slow = slow.next
+                fast = fast.next
+            return slow
