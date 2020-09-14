@@ -12,7 +12,6 @@
 import os
 import sys
 
-from typing import Dict
 from typing import List
 
 cur_dir = os.path.dirname(os.path.abspath(__file__))
@@ -34,7 +33,7 @@ class Solution:
         return self.build(0, postorder, 0, len(postorder) - 1, indices)
 
     def build(self, si: int, post: List[int], sp: int, ep: int,
-              indices: Dict) -> TreeNode:
+              indices: dict) -> TreeNode:
         if sp > ep:
             return
 
