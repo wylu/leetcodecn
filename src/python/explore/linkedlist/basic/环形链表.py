@@ -20,12 +20,14 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: ListNode) -> bool:
-        if not head or not head.next:
+        if not head:
             return False
 
-        slow, fast = head, head.next
-        while fast and fast.next and fast != slow:
-            fast = fast.next.next
+        slow, fast = head, head
+        while fast and fast.next:
             slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
 
-        return slow == fast
+        return False
