@@ -83,26 +83,41 @@
 #
 #
 #
+from functools import lru_cache
 
 
 # @lc code=start
 class Solution:
     def minDays(self, n: int) -> int:
+        @lru_cache(None)
         def dfs(n: int) -> int:
-            if n in cache:
-                return cache[n]
+            if n == 0 or n == 1:
+                return n
             # 吃二分之一的代价
             a = n % 2 + 1 + dfs(n // 2)
             # 吃三分之二的代价
             b = n % 3 + 1 + dfs(n // 3)
-            cache[n] = min(a, b)
-            return cache[n]
+            return min(a, b)
 
-        cache = {0: 0, 1: 1}
         return dfs(n)
 
 
 # @lc code=end
+
+# class Solution:
+#     def minDays(self, n: int) -> int:
+#         def dfs(n: int) -> int:
+#             if n in cache:
+#                 return cache[n]
+#             # 吃二分之一的代价
+#             a = n % 2 + 1 + dfs(n // 2)
+#             # 吃三分之二的代价
+#             b = n % 3 + 1 + dfs(n // 3)
+#             cache[n] = min(a, b)
+#             return cache[n]
+
+#         cache = {0: 0, 1: 1}
+#         return dfs(n)
 
 if __name__ == '__main__':
     solu = Solution()
