@@ -133,19 +133,29 @@ dp[i][j] = max(nums[i] − dp[i+1][j], nums[j] − dp[i][j−1])
 # @lc code=start
 class Solution:
     def PredictTheWinner(self, nums: List[int]) -> bool:
-        n = len(nums)
-        dp = [[0] * n for _ in range(n)]
-        for i in range(n):
-            dp[i][i] = nums[i]
+        @lru_cache(None)
+        def dfs(l: int, r: int) -> int:
+            if l == r:
+                return nums[l]
+            return max(nums[l] - dfs(l + 1, r), nums[r] - dfs(l, r - 1))
 
-        for i in range(n - 2, -1, -1):
-            for j in range(i + 1, n):
-                dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1])
-
-        return dp[0][n - 1] >= 0
+        return dfs(0, len(nums) - 1) >= 0
 
 
 # @lc code=end
+
+# class Solution:
+#     def PredictTheWinner(self, nums: List[int]) -> bool:
+#         n = len(nums)
+#         dp = [[0] * n for _ in range(n)]
+#         for i in range(n):
+#             dp[i][i] = nums[i]
+
+#         for i in range(n - 2, -1, -1):
+#             for j in range(i + 1, n):
+#                 dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1])
+
+#         return dp[0][n - 1] >= 0
 
 # 方法一
 # class Solution:
