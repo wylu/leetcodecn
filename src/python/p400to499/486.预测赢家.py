@@ -62,6 +62,7 @@
 #
 #
 #
+from functools import lru_cache
 from typing import List
 """
 方法一：记忆化递归
@@ -134,8 +135,8 @@ dp[i][j] = max(nums[i] − dp[i+1][j], nums[j] − dp[i][j−1])
 class Solution:
     def PredictTheWinner(self, nums: List[int]) -> bool:
         @lru_cache(None)
-        def dfs(l: int, r: int) -> int:
-            if l == r:
+        def dfs(l: int, r: int) -> int:  # noqa E741
+            if l == r:  # noqa E741
                 return nums[l]
             return max(nums[l] - dfs(l + 1, r), nums[r] - dfs(l, r - 1))
 
