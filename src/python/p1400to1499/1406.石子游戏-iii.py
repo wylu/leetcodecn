@@ -164,6 +164,27 @@ class Solution:
 
 # @lc code=end
 
+# class Solution:
+#     def stoneGameIII(self, s: List[int]) -> str:
+#         # f[i]: 表示剩下 s[i]... 堆石子时当前玩家能获得的最高分数与对手分数的差
+#         # f[i] = min(s[i] - f[i+1], s[i] + s[i+1] - f[i+2], s[i] + s[i+1] + s[i+2] - f[i+3])
+#         n = len(s)
+#         f = [0] * (n + 1)
+
+#         for i in range(n-1, -1, -1):
+#             f[i] = s[i] - f[i+1]
+#             if i < n - 1:
+#                 f[i] = max(f[i], s[i] + s[i+1] - f[i+2])
+#             if i < n - 2:
+#                 f[i] = max(f[i], s[i] + s[i+1] + s[i+2] - f[i+3])
+
+#         if f[0] > 0:
+#             return 'Alice'
+#         elif f[0] < 0:
+#             return 'Bob'
+#         else:
+#             return 'Tie'
+
 if __name__ == '__main__':
     solu = Solution()
     print(solu.stoneGameIII([1, 2, 3, 7]))
