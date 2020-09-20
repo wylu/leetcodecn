@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"sort"
+	"strconv"
 )
 
 func showStack() {
@@ -67,11 +69,88 @@ func showSort() {
 	sort.Strings(strArr)
 	fmt.Println(strArr)
 	// 自定义排序
+	ageArr := []int{13, 15, 11, 14, 12}
+	sort.Slice(ageArr, func(i, j int) bool {
+		return ageArr[i] <= ageArr[j]
+	})
+	fmt.Println(ageArr)
+}
+
+func showMath() {
+	fmt.Println(math.MaxInt32)
+	fmt.Println(math.MinInt32)
+	fmt.Println(math.MaxInt64)
+	fmt.Println(math.MinInt64)
+}
+
+func showCopy() {
+	a := []int{1, 2, 3, 4, 5, 6}
+	// 删除 a[i]，可以用 copy 将 i+1 到末尾的值覆盖到 i，然后末尾 -1
+	copy(a[2:], a[3:])
+	a = a[:len(a)-1]
+	fmt.Println(a)
+
+	a = []int{1, 2, 3, 4, 5, 6}
+	a = append(a[:2], a[3:]...)
+	fmt.Println(a)
+
+	n := len(a)
+	// make 创建长度，则通过索引赋值
+	b := make([]int, n)
+	b[0] = 1
+	fmt.Println(b)
+
+	// make 长度为 0，则通过 append() 赋值
+	c := make([]int, 0)
+	c = append(c, 1)
+	fmt.Println(c)
+
+	d := make([]int, n)
+	copy(d, a)
+	fmt.Println(d)
+}
+
+func showConvert() {
+	s := "12345"
+	a := int(s[0] - '0') // 1
+	b := byte(a + '0')   // '1'
+	fmt.Printf("%d %s %c\n", a, string(b), b)
+
+	// 字符串转数字
+	num, _ := strconv.Atoi("123")
+	fmt.Println(num)
+	// 数字转字符串
+	str := strconv.Itoa(123)
+	fmt.Println(str)
+}
+
+func sliceToString() {
+	s := []byte{'1', '2', '3', '4', '5'}
+	a := string(s)
+	fmt.Println(a)
+
+	b := []byte(a)
+	fmt.Println(b)
+	for _, ch := range b {
+		fmt.Printf("%c ", ch)
+	}
+	fmt.Println()
+
+	c := []rune(a)
+	fmt.Println(c)
+	for _, ch := range c {
+		fmt.Printf("%c ", ch)
+	}
+	fmt.Println()
 }
 
 func main() {
-	showStack()
-	showQueue()
-	showMap()
-	showSort()
+	// showStack()
+	// showQueue()
+	// showMap()
+	// showSort()
+	// showMath()
+	// showCopy()
+	// showConvert()
+	sliceToString()
 }
