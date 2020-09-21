@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@File    :   5505.所有排列中的最大和.py
+@File    :   5504.所有排列中的最大和.py
 @Time    :   2020/09/19 22:39:12
 @Author  :   wylu
 @Version :   1.0

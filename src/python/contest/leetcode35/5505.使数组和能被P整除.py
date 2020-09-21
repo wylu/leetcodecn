@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@File    :   5503.使数组和能被P整除.py
+@File    :   5505.使数组和能被P整除.py
 @Time    :   2020/09/19 22:47:16
 @Author  :   wylu
 @Version :   1.0
