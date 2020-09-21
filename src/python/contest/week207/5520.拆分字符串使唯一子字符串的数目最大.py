@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@File    :   拆分字符串使唯一子字符串的数目最大.py
+@File    :   5520.拆分字符串使唯一子字符串的数目最大.py
 @Time    :   2020/09/20 10:37:01
 @Author  :   wylu
 @Version :   1.0

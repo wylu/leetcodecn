@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-@File    :   重新排列单词间的空格.py
+@File    :   5519.重新排列单词间的空格.py
 @Time    :   2020/09/20 10:30:39
 @Author  :   wylu
 @Version :   1.0
