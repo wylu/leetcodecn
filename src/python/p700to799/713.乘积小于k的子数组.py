@@ -47,7 +47,8 @@
 #
 #
 #
-import math
+
+# import math
 
 from typing import List
 """
@@ -73,36 +74,71 @@ prefix[i+1] = nums[0] + ... + nums[i]
 这样在二分查找时，对于 i 和 j，我们可以用 prefix[j+1] − prefix[i] 得到
 nums[i] 到 nums[j] 的乘积的对数。对于固定的 i，当找到最大的满足条件的 j
 后，它会包含 j−i+1 个乘积小于 k 的连续子数组。
+
+方法二：双指针
+
+分析
+
+对于每个 right，我们需要找到最小的 left，满足：
+
+nums[left] * nums[left+1] * ... * nums[right-1] * nums[right] < k
+
+由于当 left 增加时，这个乘积是单调不增的，因此我们可以使用双指针的方法，
+单调地移动 left。
+
+算法
+
+我们使用一重循环枚举 right，同时设置 left 的初始值为 0。在循环的每一步中，
+表示 right 向右移动了一位，将乘积乘以 nums[right]。此时我们需要向右移动
+left，直到满足乘积小于 k 的条件。在每次移动时，需要将乘积除以 nums[left]。
+当 left 移动完成后，对于当前的 right，就包含了 right − left + 1 个乘积
+小于 k 的连续子数组。
 """
 
 
 # @lc code=start
 class Solution:
     def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
-        if not nums or k == 0:
+        if k <= 1:
             return 0
 
-        n = len(nums)
-        ps = [0] * (n + 1)
-        for i in range(1, n + 1):
-            ps[i] = ps[i - 1] + math.log(nums[i - 1])
-
-        ans = 0
-        logk = math.log(k) - 1e-9
-        for i in range(n):
-            lo, hi = i + 1, n + 1
-            while lo < hi:
-                mid = (lo + hi) // 2
-                if ps[mid] - ps[i] < logk:
-                    lo = mid + 1
-                else:
-                    hi = mid
-            ans += lo - i - 1
+        ans, prod, left = 0, 1, 0
+        for right in range(len(nums)):
+            prod *= nums[right]
+            while prod >= k:
+                prod //= nums[left]
+                left += 1
+            ans += right - left + 1
 
         return ans
 
 
 # @lc code=end
+
+# 二分查找
+# class Solution:
+#     def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+#         if k <= 1:
+#             return 0
+
+#         n = len(nums)
+#         ps = [0] * (n + 1)
+#         for i in range(1, n + 1):
+#             ps[i] = ps[i - 1] + math.log(nums[i - 1])
+
+#         ans = 0
+#         logk = math.log(k) - 1e-9
+#         for i in range(n):
+#             lo, hi = i + 1, n + 1
+#             while lo < hi:
+#                 mid = (lo + hi) // 2
+#                 if ps[mid] - ps[i] < logk:
+#                     lo = mid + 1
+#                 else:
+#                     hi = mid
+#             ans += lo - i - 1
+
+#         return ans
 
 # 超时
 # class Solution:
