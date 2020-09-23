@@ -126,8 +126,14 @@ class Solution:
                                 return True
 
                             newNums.pop()
+            return False
 
         return dfs(nums)
 
 
 # @lc code=end
+
+if __name__ == '__main__':
+    solu = Solution()
+    print(solu.judgePoint24([4, 1, 8, 7]))
+    print(solu.judgePoint24([1, 2, 1, 2]))
