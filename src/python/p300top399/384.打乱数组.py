@@ -55,25 +55,23 @@ from typing import List
 
 class Solution:
     def __init__(self, nums: List[int]):
-        self.origin = nums if nums else []
-        self.nums = self.origin[:]
-        self.size = len(self.nums)
+        self.nums = nums
 
     def reset(self) -> List[int]:
         """
         Resets the array to its original configuration and return it.
         """
-        self.nums = self.origin[:]
         return self.nums
 
     def shuffle(self) -> List[int]:
         """
         Returns a random shuffling of the array.
         """
-        for i in range(self.size):
-            j = randrange(i, self.size)
-            self.nums[i], self.nums[j] = self.nums[j], self.nums[i]
-        return self.nums
+        ans, n = self.nums[:], len(self.nums)
+        for i in range(n):
+            j = randrange(i, n)
+            ans[i], ans[j] = ans[j], ans[i]
+        return ans
 
 
 # Your Solution object will be instantiated and called as such:
