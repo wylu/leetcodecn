@@ -54,41 +54,35 @@
 # @lc code=start
 class Solution:
     def countPrimes(self, n: int) -> int:
-        ans, marks = 0, [True] * n
+        primes, marks = [], [True] * n
         for i in range(2, n):
             if marks[i]:
-                ans += 1
-                for j in range(i + i, n, i):
-                    marks[j] = False
-        return ans
+                primes.append(i)
+
+            j, lp = 0, len(primes)
+            while j < lp and i * primes[j] < n:
+                marks[i * primes[j]] = False
+
+                if i % primes[j] == 0:
+                    break
+
+                j += 1
+
+        return len(primes)
 
 
 # @lc code=end
 
-# 欧拉线性筛法
 # class Solution:
 #     def countPrimes(self, n: int) -> int:
-#         if n <= 2:
-#             return 0
-
-#         # 元素值为 True 表示该元素下标值为素数
-#         mark = [True for _ in range(n)]
-#         primes = []
+#         ans, marks = 0, [True] * n
 #         for i in range(2, n):
-#             if mark[i]:
-#                 primes.append(i)
-
-#             j, lp = 0, len(primes)
-#             while j < lp and i * primes[j] < n:
-#                 mark[i * primes[j]] = False
-
-#                 if i % primes[j] == 0:
-#                     break
-
-#                 j += 1
-
-#         ans = 0
-#         for i in range(2, n):
-#             if mark[i]:
+#             if marks[i]:
 #                 ans += 1
+#                 for j in range(i + i, n, i):
+#                     marks[j] = False
 #         return ans
+
+if __name__ == "__main__":
+    solu = Solution()
+    print(solu.countPrimes(100))
