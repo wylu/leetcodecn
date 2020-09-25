@@ -65,7 +65,21 @@ package p600to699
 
 // @lc code=start
 func findTarget(root *TreeNode, k int) bool {
+	seen := map[int]bool{}
 
+	var dfs func(root *TreeNode) bool
+	dfs = func(root *TreeNode) bool {
+		if root == nil {
+			return false
+		}
+		if seen[k-root.Val] {
+			return true
+		}
+		seen[root.Val] = true
+		return dfs(root.Left) || dfs(root.Right)
+	}
+
+	return dfs(root)
 }
 
 // @lc code=end
