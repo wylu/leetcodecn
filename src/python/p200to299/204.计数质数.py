@@ -36,7 +36,7 @@
 #
 #
 """
-欧拉线性筛法
+方法一：欧拉线性筛法
 
 基本思路:
 任意一个合数（2 不是合数），都可以表示成素数的乘积。
@@ -44,36 +44,51 @@
 被重复标记筛去，所以算法为线性时间复杂度。
 
 例如合数 30 = 2 * 3 * 5 ，这个合数一定是被最小素因子 2 筛去的。
+
+方法二：埃拉托斯特尼筛法
+
+当一个数是素数的时候，它的倍数肯定不是素数，对于这些数可以直接标记筛除。
 """
 
 
 # @lc code=start
 class Solution:
     def countPrimes(self, n: int) -> int:
-        if n <= 2:
-            return 0
-
-        # 元素值为 True 表示该元素下标值为素数
-        mark = [True for _ in range(n)]
-        primes = []
+        ans, marks = 0, [True] * n
         for i in range(2, n):
-            if mark[i]:
-                primes.append(i)
-
-            j, lp = 0, len(primes)
-            while j < lp and i * primes[j] < n:
-                mark[i * primes[j]] = False
-
-                if i % primes[j] == 0:
-                    break
-
-                j += 1
-
-        ans = 0
-        for i in range(2, n):
-            if mark[i]:
+            if marks[i]:
                 ans += 1
+                for j in range(i + i, n, i):
+                    marks[j] = False
         return ans
 
 
 # @lc code=end
+
+# 欧拉线性筛法
+# class Solution:
+#     def countPrimes(self, n: int) -> int:
+#         if n <= 2:
+#             return 0
+
+#         # 元素值为 True 表示该元素下标值为素数
+#         mark = [True for _ in range(n)]
+#         primes = []
+#         for i in range(2, n):
+#             if mark[i]:
+#                 primes.append(i)
+
+#             j, lp = 0, len(primes)
+#             while j < lp and i * primes[j] < n:
+#                 mark[i * primes[j]] = False
+
+#                 if i % primes[j] == 0:
+#                     break
+
+#                 j += 1
+
+#         ans = 0
+#         for i in range(2, n):
+#             if mark[i]:
+#                 ans += 1
+#         return ans
