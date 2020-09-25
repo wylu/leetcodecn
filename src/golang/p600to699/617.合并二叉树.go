@@ -53,13 +53,6 @@ package p600to699
  * @Desc    :
  */
 
-// TreeNode - Definition for a binary tree node.
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 // @lc code=start
 func mergeTrees(t1 *TreeNode, t2 *TreeNode) *TreeNode {
 	if t1 == nil {
