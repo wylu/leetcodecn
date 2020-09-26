@@ -106,13 +106,6 @@ import "math"
  * 最终，根节点的状态变量 b 即为要求出的答案。
  */
 
-// TreeNode - Definition for a binary tree node.
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 // @lc code=start
 func minCameraCover(root *TreeNode) int {
 	min := func(x, y int) int {
