@@ -5,6 +5,7 @@ import (
 	"math"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 func showStack() {
@@ -142,6 +143,11 @@ func sliceToString() {
 		fmt.Printf("%c ", ch)
 	}
 	fmt.Println()
+
+	// 数组拼接为字符串
+	d := []string{"12", "34", "5"}
+	e := strings.Join(d, "-")
+	fmt.Println(e)
 }
 
 func main() {
