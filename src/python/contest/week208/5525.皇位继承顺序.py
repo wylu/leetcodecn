@@ -9,45 +9,33 @@
 @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
 @Desc    :
 """
+from collections import defaultdict
 from typing import List
 
 
 class ThroneInheritance:
     def __init__(self, kingName: str):
         self.king = kingName
-        self.people = {}
-        self.parent = {}
+        self.children = defaultdict(list)
         self.dead = set()
 
     def birth(self, parentName: str, childName: str) -> None:
-        if parentName not in self.people:
-            self.people[parentName] = []
-        self.people[parentName].append(childName)
-        self.parent[childName] = parentName
+        self.children[parentName].append(childName)
 
     def death(self, name: str) -> None:
         self.dead.add(name)
 
     def getInheritanceOrder(self) -> List[str]:
-        indices = {k: 0 for k, _ in self.people.items()}
-        seen = {self.king}
-        x, curOrder = self.king, []
-        if self.king not in self.dead:
-            curOrder.append(self.king)
-        while True:
-            if not self.people.get(x) or set(self.people[x]).issubset(seen):
-                if x == self.king:
-                    break
-                else:
-                    x = self.parent[x]
-            else:
-                y = self.people[x][indices[x]]
-                if y not in self.dead:
-                    curOrder.append(y)
-                seen.add(y)
-                indices[x] += 1
-                x = y
-        return curOrder
+        ans = []
+
+        def dfs(name: str) -> None:
+            if name not in self.dead:
+                ans.append(name)
+            for child in self.children[name]:
+                dfs(child)
+
+        dfs(self.king)
+        return ans
 
 
 # Your ThroneInheritance object will be instantiated and called as such:
