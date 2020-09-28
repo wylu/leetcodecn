@@ -90,33 +90,24 @@ class Node:
 # @lc code=start
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
-        if not root:
-            return
+        tree = root
 
-        cur = root
-        while cur:
-            head, pre = None, None
+        while root:
+            dummy = Node()
+            cur = dummy
 
-            while cur:
-                if cur.left:
-                    if pre:
-                        pre.next = cur.left
-                    else:
-                        head = cur.left
-                    pre = cur.left
+            while root:
+                if root.left:
+                    cur.next = root.left
+                    cur = cur.next
+                if root.right:
+                    cur.next = root.right
+                    cur = cur.next
+                root = root.next
 
-                if cur.right:
-                    if pre:
-                        pre.next = cur.right
-                    else:
-                        head = cur.right
-                    pre = cur.right
+            root = dummy.next
 
-                cur = cur.next
-
-            cur = head
-
-        return root
+        return tree
 
 
 # @lc code=end
