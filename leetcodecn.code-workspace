@@ -18,7 +18,8 @@
 			"initializer_list": "cpp",
 			"utility": "cpp",
 			"vector": "cpp",
-			"iostream": "cpp"
+			"iostream": "cpp",
+			"*.tcc": "cpp"
 		},
 		"python.languageServer": "Microsoft"
 	}
