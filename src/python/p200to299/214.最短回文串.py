@@ -55,6 +55,37 @@ s1 = s1'，因此 s1 就是一个回文串。
 
 如果存在更长的回文串，那么 KMP 算法的匹配结果也会大于 i，
 因此 s1 就是最长的前缀回文串。
+
+示例 1：（无回退）
+
+s  =  abbacd    s1  = abba
+s' =  dcabba    s1' = abba
+
+fail = [-1, 0, 0, 0, 1, 0], best = -1
+
+i = 0, s'[0] = d, s[best+1] = s[0] = a, s'[0] != s[0], best = -1
+i = 1, s'[1] = c, s[best+1] = s[0] = a, s'[1] != s[0], best = -1
+i = 2, s'[2] = a, s[best+1] = s[0] = a, s'[2] == s[0], best = best+1 = 0
+i = 3, s'[3] = b, s[best+1] = s[1] = b, s'[3] == s[1], best = best+1 = 1
+i = 4, s'[4] = b, s[best+1] = s[2] = b, s'[4] == s[2], best = best+1 = 2
+i = 5, s'[5] = a, s[best+1] = s[3] = a, s'[5] == s[3], best = best+1 = 3
+
+示例 2：（有回退）
+
+s  =  ababxybaba    s1  =  aba
+s' =  ababyxbaba    s1' =  aba
+
+fail = [-1, 0, 0, 1, 2, 0, 0, 0, 1, 2], best = -1
+
+匹配到 x 处发生回退：
+
+s  =  abab x ybaba
+s' =  abab y xbaba
+
+回退到第二个 a 处：
+
+s  =    ab a bxybaba
+s' =  abab y xbaba
 """
 
 
@@ -93,7 +124,9 @@ if __name__ == '__main__':
     # print(solu.shortestPalindrome('aacecaaa'))
     # print(solu.shortestPalindrome('abcd'))
     # print(solu.shortestPalindrome('abcde'))
-    print(solu.shortestPalindrome('aabba'))
+    # print(solu.shortestPalindrome('aabba'))
+    print(solu.shortestPalindrome('abbacd'))
+    print(solu.shortestPalindrome('ababxybaba'))
 
 # 超时
 # class Solution:
