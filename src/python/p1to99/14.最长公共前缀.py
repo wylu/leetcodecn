@@ -66,24 +66,42 @@ LCP(S[1],...,S[n]) = LCP(LCP(LCP(S[1],S[2]),S[3]),...S[n])
 
 # @lc code=start
 class Solution:
-    def longestCommonPrefix(self, words: List[str]) -> str:
-        if not words:
-            return ''
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if not strs:
+            return ""
 
-        prefix = words[0]
-        for i in range(1, len(words)):
-            prefix = self.getPrefix(prefix, words[i])
-            if not prefix:
+        ans = strs[0]
+        for i in range(1, len(strs)):
+            cur = strs[i]
+            j, n = 0, min(len(ans), len(cur))
+            while j < n and ans[j] == cur[j]:
+                j += 1
+
+            ans = ans[:j]
+            if not ans:
                 break
 
-        return prefix
-
-    def getPrefix(self, prefix: str, word: str) -> str:
-        ml = min(len(prefix), len(word))
-        for i in range(ml):
-            if prefix[i] != word[i]:
-                return prefix[:i]
-        return prefix[:ml]
+        return ans
 
 
 # @lc code=end
+
+# class Solution:
+#     def longestCommonPrefix(self, words: List[str]) -> str:
+#         if not words:
+#             return ''
+
+#         prefix = words[0]
+#         for i in range(1, len(words)):
+#             prefix = self.getPrefix(prefix, words[i])
+#             if not prefix:
+#                 break
+
+#         return prefix
+
+#     def getPrefix(self, prefix: str, word: str) -> str:
+#         ml = min(len(prefix), len(word))
+#         for i in range(ml):
+#             if prefix[i] != word[i]:
+#                 return prefix[:i]
+#         return prefix[:ml]
