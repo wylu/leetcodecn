@@ -49,13 +49,15 @@ from typing import List
 # @lc code=start
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        left, right = 0, len(nums) - 1
-        while left < right:
-            while left < right and nums[left] + nums[right] > target:
-                right -= 1
-            if nums[left] + nums[right] == target:
-                return [left + 1, right + 1]
-            left += 1
+        i, j = 0, len(nums) - 1
+        while i < j:
+            cur = nums[i] + nums[j]
+            if cur == target:
+                return i + 1, j + 1
+            if cur < target:
+                i += 1
+            else:
+                j -= 1
         return [-1, -1]
 
 
