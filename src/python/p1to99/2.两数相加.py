@@ -51,10 +51,9 @@ class ListNode:
 # @lc code=start
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        if not l1 and not l2:
-            return
+        dummy = ListNode(0)
+        cur = dummy
 
-        ans = []
         carry = 0
         while l1 or l2:
             if l1:
@@ -65,17 +64,12 @@ class Solution:
                 carry += l2.val
                 l2 = l2.next
 
-            ans.append(carry % 10)
+            cur.next = ListNode(carry % 10)
+            cur = cur.next
             carry //= 10
 
         if carry:
-            ans.append(carry)
-
-        dummy = ListNode(0)
-        cur = dummy
-        for num in ans:
-            cur.next = ListNode(num)
-            cur = cur.next
+            cur.next = ListNode(carry)
 
         return dummy.next
 
