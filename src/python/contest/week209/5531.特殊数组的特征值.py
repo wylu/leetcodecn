@@ -9,16 +9,15 @@
 @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
 @Desc    :
 """
+import bisect
 from typing import List
 
 
 class Solution:
     def specialArray(self, nums: List[int]) -> int:
         nums.sort()
-        n, j = len(nums), 0
+        n = len(nums)
         for i in range(1, nums[-1] + 1):
-            while j < n and nums[j] < i:
-                j += 1
-            if n - j == i:
+            if i == n - bisect.bisect_left(nums, i):
                 return i
         return -1

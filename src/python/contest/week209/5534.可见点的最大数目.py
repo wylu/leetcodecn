@@ -16,31 +16,28 @@ from typing import List
 class Solution:
     def visiblePoints(self, points: List[List[int]], angle: int,
                       location: List[int]) -> int:
-        n = len(points)
-        dx, dy = 0 - location[0], 0 - location[1]
-        for i in range(n):
-            points[i][0] += dx
-            points[i][1] += dy
+        x, y = location
+        same = 0
+        v = []
+        for px, py in points:
+            if px == x and py == y:
+                same += 1
+            else:
+                theta = math.atan2(px - x, py - y) * 180 / math.pi
+                v.append((theta + 360) % 360)
 
-        ans = 0
-        for d in range(360):
-            start, end = d - angle / 2, d + angle / 2
-            start = (start + 360) % 360
-            end = (end + 360) % 360
+        v.sort()
+        m = len(v)
+        for i in range(m):
+            v.append(v[i] + 360)
 
-            cnt = 0
-            for x, y in points:
-                theta = (math.atan2(x, y) * 180 / math.pi + 360) % 360
-                if start > end:
-                    if theta >= start or theta <= end:
-                        cnt += 1
-                else:
-                    if start <= theta <= end or (x == 0 and y == 0):
-                        cnt += 1
+        cnt, right, n = 0, 0, len(v)
+        for left in range(m):
+            while right + 1 < n and v[right + 1] - v[left] <= angle:
+                right += 1
+            cnt = max(cnt, right - left + 1)
 
-            ans = max(ans, cnt)
-
-        return ans
+        return same + cnt
 
 
 if __name__ == "__main__":

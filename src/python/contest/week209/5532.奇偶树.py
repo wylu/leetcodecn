@@ -7,7 +7,7 @@
 @Version :   1.0
 @Contact :   15wylu@gmail.com
 @License :   Copyright © 2020, wylu-CHINA-SHENZHEN. All rights reserved.
-@Desc    :
+@Desc    :   BFS
 """
 from collections import deque
 
@@ -25,13 +25,13 @@ class Solution:
         q = deque()
         q.append(root)
 
-        level = 0
+        even = True
         while q:
-            pre = -0x8FFFFFFF - 1 if level % 2 == 0 else 0x7FFFFFFF + 1
+            pre = -0x8FFFFFFF - 1 if even else 0x7FFFFFFF + 1
 
             for _ in range(len(q)):
                 node = q.popleft()
-                if level % 2 == 0:
+                if even:
                     if node.val % 2 != 1 or node.val <= pre:
                         return False
                 else:
@@ -44,6 +44,6 @@ class Solution:
                 if node.right:
                     q.append(node.right)
 
-            level += 1
+            even ^= True
 
         return True
