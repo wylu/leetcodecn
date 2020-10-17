@@ -77,7 +77,6 @@ class Solution {
     vector<bool> cols;
     vector<bool> dales;  // 主对角线（左上->右下）
     vector<bool> hills;  // 副对角线（右上->左下）
-    vector<vector<char>> board;
     int n;
     int ans = 0;
 
@@ -89,7 +88,6 @@ public:
         cols = vector<bool>(n, false);
         dales = vector<bool>(2 * n - 1, false);
         hills = vector<bool>(2 * n - 1, false);
-        board = vector<vector<char>>(n, vector<char>(n, '.'));
 
         dfs(0);
         return ans;
