@@ -106,18 +106,19 @@ class Solution:
         ans = []
         for i in range(n):
             m = len(words[i])
+            # k+∅
             for j in range(m + 1):
-                # 判断后缀是否为回文
-                if isPalindrome(words[i], j, m - 1):
-                    rightId = findWord(words[i], 0, j - 1)
-                    if rightId != -1 and rightId != i:
-                        ans.append([i, rightId])
-
                 # 判断前缀是否为回文
                 if j and isPalindrome(words[i], 0, j - 1):
                     leftId = findWord(words[i], j, m - 1)
                     if leftId != -1 and leftId != i:
                         ans.append([leftId, i])
+
+                # 判断后缀是否为回文
+                if isPalindrome(words[i], j, m - 1):
+                    rightId = findWord(words[i], 0, j - 1)
+                    if rightId != -1 and rightId != i:
+                        ans.append([i, rightId])
 
         return ans
 
