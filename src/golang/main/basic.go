@@ -150,6 +150,17 @@ func sliceToString() {
 	fmt.Println(e)
 }
 
+func showCustomSort() {
+	areas := [][]int{{0, 5}, {1, 4}, {0, 2}, {0, 3}, {1, 2}}
+	sort.Slice(areas, func(i, j int) bool {
+		if areas[i][0] == areas[j][0] {
+			return areas[i][1] < areas[j][1]
+		}
+		return areas[i][0] < areas[j][0]
+	})
+	fmt.Println(areas)
+}
+
 func main() {
 	// showStack()
 	// showQueue()
@@ -158,5 +169,6 @@ func main() {
 	// showMath()
 	// showCopy()
 	// showConvert()
-	sliceToString()
+	// sliceToString()
+	showCustomSort()
 }
