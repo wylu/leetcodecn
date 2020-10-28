@@ -161,6 +161,12 @@ func showCustomSort() {
 	fmt.Println(areas)
 }
 
+func showOverflow() {
+	a := math.MinInt32
+	b := -a
+	fmt.Printf("%T: %d\n", b, b)
+}
+
 func main() {
 	// showStack()
 	// showQueue()
@@ -170,5 +176,6 @@ func main() {
 	// showCopy()
 	// showConvert()
 	// sliceToString()
-	showCustomSort()
+	// showCustomSort()
+	showOverflow()
 }

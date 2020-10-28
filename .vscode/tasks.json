@@ -3,13 +3,15 @@
         {
             "type": "shell",
             "label": "Linux: g++ build active file",
-            "command": "/usr/bin/g++",
+            // "command": "/usr/bin/g++",
+            "command": "g++",
             "args": [
                 "-g",
                 "${file}",
                 "-o",
                 "${fileDirname}/out",
-                "-std=c++17"
+                // "-std=c++17"
+                "-std=c++11"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

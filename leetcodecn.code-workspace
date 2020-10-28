@@ -19,7 +19,8 @@
 			"utility": "cpp",
 			"vector": "cpp",
 			"iostream": "cpp",
-			"*.tcc": "cpp"
+			"*.tcc": "cpp",
+			"cstdint": "cpp"
 		},
 		"python.languageServer": "Microsoft"
 	}
