@@ -15,23 +15,26 @@ from typing import List
 class Solution:
     def minOperationsMaxProfit(self, customers: List[int], boardingCost: int,
                                runningCost: int) -> int:
-        ans, cnt = -0x8FFFFFFF, -1
+        ans, cnt = 0, -1
         i, cur, take, n = 0, 0, 0, len(customers)
+
         while i < n or cur != 0:
             if i < n:
                 cur += customers[i]
             i += 1
+
             if cur <= 4:
                 take += cur
                 cur = 0
             else:
                 take += 4
                 cur -= 4
-            if take * boardingCost - i * runningCost > ans:
-                ans = take * boardingCost - i * runningCost
-                cnt = i
 
-        return -1 if ans < 0 else cnt
+            benefit = take * boardingCost - i * runningCost
+            if benefit > ans:
+                ans, cnt = benefit, i
+
+        return -1 if ans == 0 else cnt
 
 
 if __name__ == "__main__":
@@ -39,3 +42,4 @@ if __name__ == "__main__":
     print(solu.minOperationsMaxProfit([8, 3], 5, 6))
     print(solu.minOperationsMaxProfit([10, 9, 6], 6, 4))
     print(solu.minOperationsMaxProfit([8, 3], 5, 6))
+    print(solu.minOperationsMaxProfit([2], 2, 4))
