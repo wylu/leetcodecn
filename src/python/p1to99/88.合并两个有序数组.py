@@ -71,8 +71,8 @@ class Solution:
         i, j, k = m - 1, n - 1, m + n - 1
 
         while i >= 0 or j >= 0:
-            v1 = nums1[i] if i >= 0 else -0x8FFFFFFF
-            v2 = nums2[j] if j >= 0 else -0x8FFFFFFF
+            v1 = nums1[i] if i >= 0 else -0x80000000
+            v2 = nums2[j] if j >= 0 else -0x80000000
 
             if v1 > v2:
                 nums1[k] = v1
