@@ -45,7 +45,7 @@ from typing import List
 # @lc code=start
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        ans, pre = -0x8FFFFFFF, 0
+        ans, pre = -0x80000000, 0
         for num in nums:
             if pre > 0:
                 pre += num
