@@ -46,11 +46,11 @@
 #
 # 输入：[-10,9,20,null,null,15,7]
 #
-# -10
-# / \
+#  -10
+#  / \
 # 9  20
-# /  \
-# 15   7
+#   /  \
+#  15   7
 #
 # 输出：42
 #
@@ -68,7 +68,7 @@ class TreeNode:
 # @lc code=start
 class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
-        ans = -0x8FFFFFFF
+        ans = -0x80000000
 
         def dfs(root: TreeNode) -> int:
             nonlocal ans
