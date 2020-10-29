@@ -71,7 +71,7 @@ class TreeNode:
 # @lc code=start
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-        pre = -0x8FFFFFFF - 1
+        pre = -0x80000000 - 1
         while root:
             if not root.left:
                 if root.val <= pre:
@@ -100,7 +100,7 @@ class Solution:
 
 # class Solution:
 #     def isValidBST(self, root: TreeNode) -> bool:
-#         pre = -0x8FFFFFFF - 1
+#         pre = -0x80000000 - 1
 #         stack = []
 #         while root or stack:
 #             while root:
