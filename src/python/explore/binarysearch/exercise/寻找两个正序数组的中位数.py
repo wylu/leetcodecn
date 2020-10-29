@@ -32,7 +32,7 @@ class Solution:
 
         i = (left + right + 1) // 2
         j = totLeft - i
-        INT_MIN, INT_MAX = -0x8FFFFFFF, 0x7FFFFFFF
+        INT_MIN, INT_MAX = -0x80000000, 0x7FFFFFFF
         maxLeft1 = INT_MIN if i == 0 else nums1[i - 1]
         minRight1 = INT_MAX if i == m else nums1[i]
         maxLeft2 = INT_MIN if j == 0 else nums2[j - 1]
