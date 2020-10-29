@@ -17,7 +17,7 @@ class Solution:
     def bestCoordinate(self, towers: List[List[int]],
                        radius: int) -> List[int]:
         minx = miny = 0x7FFFFFFF
-        maxx = maxy = -0x8FFFFFFF
+        maxx = maxy = -0x80000000
         for x, y, _ in towers:
             minx = min(minx, x)
             miny = min(miny, y)
@@ -41,7 +41,7 @@ class Solution:
                     ans.append([i, j])
 
         ans.sort()
-        return ans[0]
+        return ans[0] if power > 0 else [0, 0]
 
 
 if __name__ == "__main__":
@@ -53,3 +53,4 @@ if __name__ == "__main__":
               [25, 25, 45], [0, 31, 15], [44, 45, 13], [18, 47, 23],
               [47, 19, 26], [48, 18, 32]]
     print(solu.bestCoordinate(towers, 44))
+    print(solu.bestCoordinate([[42, 0, 0]], 7))
