@@ -27,7 +27,7 @@ class Solution:
 
         even = True
         while q:
-            pre = -0x8FFFFFFF - 1 if even else 0x7FFFFFFF + 1
+            pre = -0x80000000 - 1 if even else 0x7FFFFFFF + 1
 
             for _ in range(len(q)):
                 node = q.popleft()
