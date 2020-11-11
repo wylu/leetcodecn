@@ -85,7 +85,7 @@ class Solution:
         intervals.sort(key=lambda x: x[1])
 
         n = len(intervals)
-        ans, cur = 0, -0x8FFFFFFF
+        ans, cur = 0, -0x80000000
         for s, e in intervals:
             if s >= cur:
                 ans += 1
