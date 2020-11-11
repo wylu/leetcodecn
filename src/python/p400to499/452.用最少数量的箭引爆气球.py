@@ -56,7 +56,7 @@ class Solution:
             return 0
 
         points.sort(key=lambda x: x[1])
-        ans, cur = 0, -0x8FFFFFFF - 1
+        ans, cur = 0, -0x80000000 - 1
         for s, e in points:
             if s > cur:
                 ans += 1
