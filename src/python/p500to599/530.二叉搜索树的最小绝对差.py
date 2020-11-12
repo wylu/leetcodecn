@@ -70,6 +70,8 @@ class TreeNode:
 # @lc code=start
 class Solution:
     def getMinimumDifference(self, root: TreeNode) -> int:
+        ans, pre = 0x7FFFFFFF, -0x80000000
+
         def dfs(root: TreeNode) -> None:
             nonlocal ans, pre
             if not root:
@@ -79,7 +81,6 @@ class Solution:
             pre = root.val
             dfs(root.right)
 
-        ans, pre = 0x7FFFFFFF, -0x8FFFFFFF
         dfs(root)
         return ans
 
