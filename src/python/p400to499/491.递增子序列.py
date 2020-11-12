@@ -123,9 +123,11 @@ class Solution:
             if nums[cur] != last:
                 dfs(cur + 1, last)
 
-        dfs(0, -0x8FFFFFFF)
+        dfs(0, -0x80000000)
         return ans
 
+
+# @lc code=end
 
 # class Solution:
 #     def findSubsequences(self, nums: List[int]) -> List[List[int]]:
@@ -150,8 +152,6 @@ class Solution:
 #             cur.pop()
 
 #         return ans
-
-# @lc code=end
 
 if __name__ == '__main__':
     solu = Solution()
