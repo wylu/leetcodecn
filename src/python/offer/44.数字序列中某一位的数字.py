@@ -28,18 +28,19 @@
 
 class Solution:
     def findNthDigit(self, n: int) -> int:
-        if n == 0:
-            return 0
-
         i, cur = 1, 9
-        while n > cur:
-            n -= cur
-            cur = (10**i) * 9 * (i + 1)
+        while n > cur * i:
+            n -= cur * i
+            cur *= 10
             i += 1
 
-        pass
+        a, b = divmod(n - 1, i)
+        return int(str(cur // 9 + a)[b])
 
 
 if __name__ == "__main__":
     solu = Solution()
     print(solu.findNthDigit(10))
+    print(solu.findNthDigit(3))
+    print(solu.findNthDigit(11))
+    print(solu.findNthDigit(0))
