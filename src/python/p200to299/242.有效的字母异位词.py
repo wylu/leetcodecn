@@ -50,11 +50,13 @@
 # @lc code=start
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+
         cnts = [0] * 26
-        for ch in s:
-            cnts[ord(ch) - ord('a')] += 1
-        for ch in t:
-            cnts[ord(ch) - ord('a')] -= 1
+        for i in range(len(s)):
+            cnts[ord(s[i]) - ord('a')] += 1
+            cnts[ord(t[i]) - ord('a')] -= 1
         for c in cnts:
             if c != 0:
                 return False
