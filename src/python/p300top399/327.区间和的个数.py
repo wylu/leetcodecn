@@ -72,42 +72,17 @@ n1[0] + lower；随后，再不断地将指针 r 向右移动，直到 n2[r] > n
 # @lc code=start
 class Solution:
     def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
+        if not nums:
+            return 0
+
         n = len(nums)
         ps = [0] * (n + 1)
-        assist = [0] * (n + 1)
         for i in range(n):
             ps[i + 1] = ps[i] + nums[i]
 
         def merge(left: int, mid: int, right: int) -> None:
-            i, j, k = left, mid + 1, 0
-            while i <= mid and j <= right:
-                if ps[i] < ps[j]:
-                    assist[k] = ps[i]
-                    i, k = i + 1, k + 1
-                else:
-                    assist[k] = ps[j]
-                    j, k = j + 1, k + 1
-
-            while i <= mid:
-                assist[k] = ps[i]
-                i, k = i + 1, k + 1
-
-            while j <= right:
-                assist[k] = ps[j]
-                j, k = j + 1, k + 1
-
-            for i in range(right - left + 1):
-                ps[left + i] = assist[i]
-
-        def mergeSort(left: int, right: int) -> int:
-            if left >= right:
-                return 0
-
-            mid = (left + right) // 2
-            ans = mergeSort(left, mid) + mergeSort(mid + 1, right)
-
             # 统计下标对的数量
-            i, lt, rt = left, mid + 1, mid + 1
+            ans, i, lt, rt = 0, left, mid + 1, mid + 1
             while i <= mid:
                 while lt <= right and ps[lt] - ps[i] < lower:
                     lt += 1
@@ -116,7 +91,36 @@ class Solution:
                 ans += rt - lt
                 i += 1
 
-            merge(left, mid, right)
+            assist = [0] * (right - left + 1)
+            i, j, k = left, mid + 1, 0
+            while i <= mid or j <= right:
+                if i > mid:
+                    assist[k] = ps[j]
+                    j += 1
+                elif j > right:
+                    assist[k] = ps[i]
+                    i += 1
+                else:
+                    if ps[i] <= ps[j]:
+                        assist[k] = ps[i]
+                        i += 1
+                    else:
+                        assist[k] = ps[j]
+                        j += 1
+                k += 1
+
+            for i in range(k):
+                ps[left + i] = assist[i]
+
+            return ans
+
+        def mergeSort(left: int, right: int) -> int:
+            ans = 0
+            if left < right:
+                mid = (left + right) // 2
+                ans += mergeSort(left, mid)
+                ans += mergeSort(mid + 1, right)
+                ans += merge(left, mid, right)
             return ans
 
         return mergeSort(0, n)
