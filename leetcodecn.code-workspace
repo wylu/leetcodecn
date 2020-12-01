@@ -12,6 +12,12 @@
 		"code-runner.clearPreviousOutput": true,
 		"code-runner.runInTerminal": true,
 		"code-runner.saveFileBeforeRun": true,
+		"code-runner.executorMap": {
+			"go": "go run $dir*.go",
+		},
+		"code-runner.executorMapByGlob": {
+			"$dir\\*.go": "go"
+		},
 		"files.associations": {
 			"array": "cpp",
 			"string_view": "cpp",

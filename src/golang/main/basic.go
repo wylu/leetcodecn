@@ -1,6 +1,7 @@
 package main
 
 import (
+	"container/heap"
 	"fmt"
 	"math"
 	"sort"
@@ -167,6 +168,17 @@ func showOverflow() {
 	fmt.Printf("%T: %d\n", b, b)
 }
 
+func showHeapImpl() {
+	minh := hp{}
+	for i := 10; i >= 1; i-- {
+		heap.Push(&minh, pair{name: "test" + strconv.Itoa(i), age: i})
+	}
+
+	for len(minh) > 0 {
+		fmt.Println((heap.Pop(&minh)).(pair))
+	}
+}
+
 func main() {
 	// showStack()
 	// showQueue()
@@ -177,5 +189,6 @@ func main() {
 	// showConvert()
 	// sliceToString()
 	// showCustomSort()
-	showOverflow()
+	// showOverflow()
+	showHeapImpl()
 }
