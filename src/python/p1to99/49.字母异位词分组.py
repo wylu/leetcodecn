@@ -54,12 +54,22 @@ class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         words = defaultdict(list)
         for s in strs:
-            t = ''.join(sorted(list(s)))
-            words[t].append(s)
-        return [ss for _, ss in words.items()]
+            cnts = [0] * 26
+            for ch in s:
+                cnts[ord(ch) - ord('a')] += 1
+            words[tuple(cnts)].append(s)
+        return list(words.values())
 
 
 # @lc code=end
+
+# class Solution:
+#     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+#         words = defaultdict(list)
+#         for s in strs:
+#             t = ''.join(sorted(list(s)))
+#             words[t].append(s)
+#         return [ss for _, ss in words.items()]
 
 if __name__ == "__main__":
     solu = Solution()
