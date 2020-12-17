@@ -71,24 +71,19 @@ package p700to799
  */
 // @lc code=start
 func maxProfit(prices []int, fee int) int {
-	if prices == nil || len(prices) <= 1 {
-		return 0
+	max := func(x, y int) int {
+		if x > y {
+			return x
+		}
+		return y
 	}
 
 	dp0, dp1 := 0, -prices[0]
 	for i := 1; i < len(prices); i++ {
-		tmp := dp0
-		dp0 = max714(dp0, dp1+prices[i]-fee)
-		dp1 = max714(dp1, tmp-prices[i])
+		dp0 = max(dp0, dp1+prices[i]-fee)
+		dp1 = max(dp1, dp0-prices[i])
 	}
 	return dp0
-}
-
-func max714(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
 }
 
 // @lc code=end
