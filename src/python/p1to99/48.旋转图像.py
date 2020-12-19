@@ -84,23 +84,13 @@ from typing import List
 # @lc code=start
 class Solution:
     def rotate(self, mat: List[List[int]]) -> None:
-        if not mat or len(mat) == 0 or len(mat[0]) == 0:
-            return
-
         n = len(mat)
-
         # 转置 list(map(list,zip(*matrix)))
         for i in range(n):
             for j in range(i + 1, n):
                 mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
-
-        # 反转
-        for i in range(n):
-            lt, rt = 0, n - 1
-            while lt < rt:
-                mat[i][lt], mat[i][rt] = mat[i][rt], mat[i][lt]
-                lt += 1
-                rt -= 1
+            # 反转
+            mat[i].reverse()
 
 
 # @lc code=end
