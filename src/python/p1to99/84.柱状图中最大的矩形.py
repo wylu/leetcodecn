@@ -50,15 +50,18 @@
 #
 #
 from typing import List
+"""
+单调栈 + 哨兵
+"""
 
 
 # @lc code=start
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         heights = [0] + heights + [0]
-        ans, stack, n = 0, [0], len(heights)
+        ans, stack = 0, [0]
 
-        for i in range(1, n):
+        for i in range(1, len(heights)):
             while heights[stack[-1]] > heights[i]:
                 h = heights[stack.pop()]
                 w = i - stack[-1] - 1
