@@ -83,9 +83,9 @@ class Solution:
         n = len(isConnected)
 
         def dfs(i: int) -> None:
+            visited[i] = True
             for j in range(n):
                 if isConnected[i][j] == 1 and not visited[j]:
-                    visited[j] = True
                     dfs(j)
 
         ans, visited = 0, [False] * n
