@@ -76,9 +76,8 @@ class Solution:
     def prefixesDivBy5(self, A: List[int]) -> List[bool]:
         ans, cur = [], 0
         for bit in A:
-            cur <<= 1
-            cur |= bit
-            ans.append(cur % 5 == 0)
+            cur = ((cur << 1) + bit) % 5
+            ans.append(cur == 0)
         return ans
 
 
