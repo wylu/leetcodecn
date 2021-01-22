@@ -79,19 +79,24 @@ from typing import List
 
 # @lc code=start
 class Solution:
-    def addToArrayForm(self, a: List[int], k: int) -> List[int]:
-        carry = k
-        for i in range(len(a) - 1, -1, -1):
-            carry += a[i]
-            a[i] = carry % 10
+    def addToArrayForm(self, A: List[int], K: int) -> List[int]:
+        i, carry = len(A) - 1, K
+        ans = []
+        while i >= 0 or carry:
+            if i >= 0:
+                carry += A[i]
+                i -= 1
+            ans.append(carry % 10)
             carry //= 10
-            if carry == 0:
-                break
-
-        if carry:
-            a = list(map(int, str(carry))) + a
-
-        return a
+        ans.reverse()
+        return ans
 
 
 # @lc code=end
+
+if __name__ == "__main__":
+    solu = Solution()
+    print(solu.addToArrayForm(A=[1, 2, 0, 0], K=34))
+    print(solu.addToArrayForm(A=[2, 7, 4], K=181))
+    print(solu.addToArrayForm(A=[2, 1, 5], K=806))
+    print(solu.addToArrayForm(A=[9, 9, 9, 9, 9, 9, 9, 9, 9, 9], K=1))
