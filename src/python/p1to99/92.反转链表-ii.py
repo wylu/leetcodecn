@@ -80,18 +80,16 @@ class Solution:
         pre, cur = dummy, head
         i = 1
         while cur:
-            if i < left:
-                pre, cur = cur, cur.next
-            elif i == left:
-                mark1, mark2 = pre, cur
+            if i <= left:
+                if i == left:
+                    mark1, mark2 = pre, cur
                 pre, cur = cur, cur.next
             elif i == right:
                 tmp = cur.next
                 cur.next = pre
-                mark1.next = cur
-                mark2.next = tmp
+                mark1.next, mark2.next = cur, tmp
                 break
-            elif i > left:
+            else:
                 tmp = cur.next
                 cur.next = pre
                 pre, cur = cur, tmp
