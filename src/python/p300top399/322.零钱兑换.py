@@ -87,13 +87,13 @@ State:
 
 Initial State:
   因为硬币的数量一定不会超过 amount，而 amount <= 10^4，因此初始化
-  数组值为10001；
+  数组值为 10001；
   dp[0] = 0
 
 State Transition:
   dp[i] = min(dp[i], dp[i - coin] + 1)
 
-当前填满容量 i 最少需要的硬币 = min(之前填满容量 i 最少需要的硬币, 
+当前填满容量 i 最少需要的硬币 = min(之前填满容量 i 最少需要的硬币,
                                  填满容量 i-coin 需要的硬币 + 1个当前硬币）
 
 返回 dp[amount]，如果 dp[amount] 的值为 10001 没有变过，
