@@ -12,22 +12,6 @@ Dynamic Programming
 
 State:
   dp[i][j]: 表示青蛙当前处于点 i 的第 j 条跑道时的最少侧跳次数
-
-Initial State:
-  dp[0][1] = 0
-  dp[i][j] = MAX_INT32  (0 <= i <= n && 1 <= j <= 3 && obstacles[i] != 0)
-
-State Transition:
-  if obstacles[i] == 0:
-      dp[i][1] = dp[i-1][1]
-      dp[i][2] = dp[i-1][2]
-      dp[i][3] = dp[i-1][3]
-      dp[i][1] = min(dp[i][1], dp[i][2] + 1, dp[i][3] + 1)
-      dp[i][2] = min(dp[i][1] + 1, dp[i][2], dp[i][3] + 1)
-      dp[i][3] = min(dp[i][1] + 1, dp[i][2] + 1, dp[i][3])
-  else:
-      dp[i][j] = dp[i-1][j]
-      dp[i][j] = min(dp[i][j], dp[i][!j] + 1)
 """
 from typing import List
 
