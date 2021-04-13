@@ -71,6 +71,8 @@ class TreeNode:
 # @lc code=start
 class Solution:
     def minDiffInBST(self, root: TreeNode) -> int:
+        ans, pre = 0x7FFFFFFF, None
+
         def dfs(root: TreeNode) -> None:
             nonlocal ans, pre
             if not root:
@@ -81,7 +83,6 @@ class Solution:
             pre = root
             dfs(root.right)
 
-        ans, pre = 0x7FFFFFFF, None
         dfs(root)
         return ans
 
