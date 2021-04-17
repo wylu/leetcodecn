@@ -110,14 +110,16 @@ from sortedcontainers import SortedSet  # noqa E402
 class Solution:
     def containsNearbyAlmostDuplicate(self, nums: List[int], k: int,
                                       t: int) -> bool:
-        rec = SortedSet()
+        win = SortedSet()
         for i in range(len(nums)):
-            pos = rec.bisect_left(nums[i] - t)
-            if pos < len(rec) and rec[pos] <= nums[i] + t:
+            pos = win.bisect_left(nums[i] - t)
+            if pos < len(win) and win[pos] <= nums[i] + t:
                 return True
-            rec.add(nums[i])
+
+            win.add(nums[i])
             if i >= k:
-                rec.discard(nums[i - k])
+                win.discard(nums[i - k])
+
         return False
 
 
