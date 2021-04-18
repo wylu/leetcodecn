@@ -80,7 +80,11 @@ class Solution:
             if nums[i] != nums[j]:
                 j += 1
                 nums[j] = nums[i]
-        return j + 1
+        return j + 1 if nums else 0
 
 
 # @lc code=end
+
+if __name__ == '__main__':
+    solu = Solution()
+    print(solu.removeDuplicates([]))
