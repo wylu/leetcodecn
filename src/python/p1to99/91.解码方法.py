@@ -88,7 +88,7 @@
 #
 #
 """
-Danamic Programming
+Dynamic Programming
 
 State
   dp[i+1]: 表是 s[0...i] 的解码方法总数
