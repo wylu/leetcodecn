@@ -73,11 +73,9 @@ class Solution:
             dp.append(dp[i - 1] + grid[0][i])
 
         for i in range(1, m):
-            for j in range(0, n):
-                if j == 0:
-                    dp[0] = dp[0] + grid[i][0]
-                else:
-                    dp[j] = min(dp[j - 1], dp[j]) + grid[i][j]
+            dp[0] += grid[i][0]
+            for j in range(1, n):
+                dp[j] = min(dp[j - 1], dp[j]) + grid[i][j]
 
         return dp[n - 1]
 
