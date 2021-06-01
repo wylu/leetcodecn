@@ -80,7 +80,6 @@
 #
 #
 #
-import bisect
 from typing import List
 
 
@@ -105,8 +104,7 @@ class Solution:
 
             # 因为每天至少吃 1 个糖果，所以到今天至少需要吃 fd 个糖果，
             # 若吃掉 fd 个糖果时，已无 ft 类型的糖果
-            idx = bisect.bisect_right(ps, fd) - 1
-            if idx > ft:
+            if ps[ft + 1] - fd <= 0:
                 continue
 
             ans[i] = True
