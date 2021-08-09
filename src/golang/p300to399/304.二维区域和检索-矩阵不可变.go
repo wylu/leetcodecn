@@ -69,7 +69,7 @@ type NumMatrix struct {
 }
 
 // Constructor ...
-func Constructor(matrix [][]int) NumMatrix {
+func Constructor304(matrix [][]int) NumMatrix {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return NumMatrix{}
 	}

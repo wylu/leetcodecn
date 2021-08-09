@@ -75,7 +75,7 @@ type RandomizedSet struct {
 }
 
 // Constructor - Initialize your data structure here.
-func Constructor() RandomizedSet {
+func Constructor380() RandomizedSet {
 	return RandomizedSet{
 		idx: map[int]int{},
 	}

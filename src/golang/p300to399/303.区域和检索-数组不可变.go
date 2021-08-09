@@ -68,7 +68,7 @@ type NumArray struct {
 	ps []int
 }
 
-func Constructor(nums []int) NumArray {
+func Constructor303(nums []int) NumArray {
 	na := NumArray{
 		ps: make([]int, len(nums)+1),
 	}

@@ -58,7 +58,7 @@ package p100to199
  */
 
 // @lc code=start
-func wordBreak(s string, wordDict []string) bool {
+func wordBreak139(s string, wordDict []string) bool {
 	wordSet := map[string]bool{}
 	for _, word := range wordDict {
 		wordSet[word] = true

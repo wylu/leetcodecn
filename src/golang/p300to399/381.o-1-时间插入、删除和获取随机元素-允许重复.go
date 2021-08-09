@@ -63,7 +63,7 @@ type RandomizedCollection struct {
 }
 
 // Constructor - Initialize your data structure here.
-func Constructor() RandomizedCollection {
+func Constructor381() RandomizedCollection {
 	return RandomizedCollection{
 		idx: map[int]map[int]bool{},
 	}
