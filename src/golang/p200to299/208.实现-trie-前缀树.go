@@ -57,7 +57,7 @@ type Trie struct {
 }
 
 // Constructor - Initialize your data structure here.
-func Constructor() Trie {
+func Constructor208() Trie {
 	return Trie{}
 }
 

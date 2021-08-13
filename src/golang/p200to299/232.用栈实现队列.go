@@ -99,7 +99,7 @@ type MyQueue struct {
 }
 
 // Constructor - Initialize your data structure here.
-func Constructor() MyQueue {
+func Constructor232() MyQueue {
 	return MyQueue{}
 }
 
