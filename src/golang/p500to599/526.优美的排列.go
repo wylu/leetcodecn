@@ -61,26 +61,52 @@ package p500to599
 
 // @lc code=start
 func countArrangement(n int) int {
-	used := make([]bool, n+1)
+	size := 1 << n
+	f := make([]int, size)
+	f[0] = 1
 
-	var dfs func(cur int) int
-	dfs = func(cur int) int {
-		if cur == n+1 {
-			return 1
+	binCount := func(x int) int {
+		cnt := 0
+		for x > 0 {
+			cnt += x & 1
+			x >>= 1
 		}
-
-		res := 0
-		for i := 1; i <= n; i++ {
-			if !used[i] && (cur%i == 0 || i%cur == 0) {
-				used[i] = true
-				res += dfs(cur + 1)
-				used[i] = false
-			}
-		}
-		return res
+		return cnt
 	}
 
-	return dfs(1)
+	for mask := 1; mask < size; mask++ {
+		num := binCount(mask)
+		for i := 0; i < n; i++ {
+			if mask&(1<<i) != 0 && (num%(i+1) == 0 || (i+1)%num == 0) {
+				f[mask] += f[mask^(1<<i)]
+			}
+		}
+	}
+
+	return f[size-1]
 }
 
 // @lc code=end
+
+// func countArrangement(n int) int {
+// 	used := make([]bool, n+1)
+
+// 	var dfs func(cur int) int
+// 	dfs = func(cur int) int {
+// 		if cur == n+1 {
+// 			return 1
+// 		}
+
+// 		res := 0
+// 		for i := 1; i <= n; i++ {
+// 			if !used[i] && (cur%i == 0 || i%cur == 0) {
+// 				used[i] = true
+// 				res += dfs(cur + 1)
+// 				used[i] = false
+// 			}
+// 		}
+// 		return res
+// 	}
+
+// 	return dfs(1)
+// }
