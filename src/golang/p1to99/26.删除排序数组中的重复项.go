@@ -71,7 +71,7 @@ package p1to99
  */
 
 // @lc code=start
-func removeDuplicates(nums []int) int {
+func removeDuplicates26(nums []int) int {
 	if len(nums) == 0 {
 		return 0
 	}

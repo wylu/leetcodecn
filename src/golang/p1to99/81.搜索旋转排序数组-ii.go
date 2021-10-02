@@ -52,7 +52,7 @@ package p1to99
  */
 
 // @lc code=start
-func search(nums []int, target int) bool {
+func search81(nums []int, target int) bool {
 	left, right := 0, len(nums)-1
 
 	for left <= right {

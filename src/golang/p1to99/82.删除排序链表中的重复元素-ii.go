@@ -65,7 +65,7 @@ package p1to99
  *     Next *ListNode
  * }
  */
-func deleteDuplicates(head *ListNode) *ListNode {
+func deleteDuplicates82(head *ListNode) *ListNode {
 	dummy := &ListNode{
 		Val:  -1,
 		Next: head,
