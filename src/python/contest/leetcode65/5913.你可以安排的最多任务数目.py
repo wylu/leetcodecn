@@ -64,7 +64,7 @@ class Solution:
                     if rem == 0:
                         return False
                     idx = sl.bisect_left(tasks[i] - strength)
-                    if idx == k:
+                    if idx == len(sl):
                         return False
                     rem -= 1
                     sl.discard(sl[idx])
