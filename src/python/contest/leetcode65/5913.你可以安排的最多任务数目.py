@@ -39,10 +39,30 @@ A 服药能完成任务，B 不服药也能完成任务这样的情形。此时�
 
 时间复杂度 O(N*(logN)^2)。
 空间复杂度 O(N)。
-"""
-from typing import List
 
-from sortedcontainers import SortedList
+方法二：单调队列
+
+在二分的大框架下，我们也可以从弱到强来考虑选出的 K 个工人。
+
+显然，每个工人都必须做一个任务，否则总共做不到 K 个。对于第 i 个工人，
+我们将所有难度值不超过 workers[i] + strength 的任务维护在一个双端队列中。
+由于我们已经对任务进行排序，这个队列天然就是一个单调队列。
+
+- 首先考虑这个工人不吃药的情况。此时我们看队列最前面，也即当前最容易的
+  任务是否能够被完成。如果可以，则让该工人做这个最容易的任务。因为任务
+  是必须要做的，而后面的人能力都比当前这个人要强，所以安排当前这个人来
+  做任务是不亏的。
+- 如果他不吃药就做不了任务，那就必须吃药。吃药之后，我们应该让他做当前
+  最难的任务，也即队尾的任务。
+- 如果吃了药也做不了任何任务，则说明无法完成 K 个任务。
+
+这样，时间复杂度就优化掉了一个 log。
+
+时间复杂度 O(NlogN)。
+空间复杂度 O(N)。
+"""
+from collections import deque
+from typing import List
 
 
 class Solution:
@@ -56,20 +76,23 @@ class Solution:
             if k > m:
                 return False
 
-            rem = pills
-            sl = SortedList(workers[-k:])  # type: SortedList
-            for i in range(k - 1, -1, -1):
-                idx = sl.bisect_left(tasks[i])
-                if idx == len(sl):
-                    if rem == 0:
-                        return False
-                    idx = sl.bisect_left(tasks[i] - strength)
-                    if idx == len(sl):
-                        return False
+            ptr, rem = -1, pills
+            que = deque()
+            for i in range(m - k, m):
+                while ptr + 1 < k and tasks[ptr + 1] <= workers[i] + strength:
+                    ptr += 1
+                    que.append(tasks[ptr])
+
+                if not que:
+                    return False
+
+                if que[0] <= workers[i]:
+                    que.popleft()
+                elif rem > 0:
                     rem -= 1
-                    sl.discard(sl[idx])
+                    que.pop()
                 else:
-                    sl.discard(sl[idx])
+                    return False
 
             return True
 
@@ -109,3 +132,43 @@ if __name__ == '__main__':
     pills = 1
     strength = 5
     print(solu.maxTaskAssign(tasks, workers, pills, strength))
+
+# from sortedcontainers import SortedList
+
+# class Solution:
+#     def maxTaskAssign(self, tasks: List[int], workers: List[int], pills: int,
+#                       strength: int) -> int:
+#         n, m = len(tasks), len(workers)
+#         tasks.sort()
+#         workers.sort()
+
+#         def check(k: int) -> bool:
+#             if k > m:
+#                 return False
+
+#             rem = pills
+#             sl = SortedList(workers[-k:])  # type: SortedList
+#             for i in range(k - 1, -1, -1):
+#                 idx = sl.bisect_left(tasks[i])
+#                 if idx == len(sl):
+#                     if rem == 0:
+#                         return False
+#                     idx = sl.bisect_left(tasks[i] - strength)
+#                     if idx == len(sl):
+#                         return False
+#                     rem -= 1
+#                     sl.discard(sl[idx])
+#                 else:
+#                     sl.discard(sl[idx])
+
+#             return True
+
+#         left, right = 0, n
+#         while left < right:
+#             mid = (left + right + 1) // 2
+#             if check(mid):
+#                 left = mid
+#             else:
+#                 right = mid - 1
+
+#         return left
