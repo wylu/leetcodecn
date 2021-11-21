@@ -22,3 +22,9 @@ type TreeNode struct {
 	Left  *TreeNode
 	Right *TreeNode
 }
+
+// Node - Definition for a N way tree node.
+type Node struct {
+	Val      int
+	Children []*Node
+}
