@@ -85,7 +85,7 @@ class Solution:
                 k -= 1
             i += 1
 
-        if k > 0 and k % 2 == 1:
+        if k % 2:
             nums[-1] = -nums[-1]
 
         return sum(nums)
