@@ -1,4 +1,4 @@
-package p1000to1099
+package p1100to1199
 
 /*
  * @lc app=leetcode.cn id=1128 lang=golang
