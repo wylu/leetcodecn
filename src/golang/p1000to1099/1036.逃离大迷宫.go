@@ -1,5 +1,7 @@
 package p1000to1099
 
+import "sort"
+
 /*
  * @lc app=leetcode.cn id=1036 lang=golang
  *
@@ -97,7 +99,85 @@ package p1000to1099
 
 // @lc code=start
 func isEscapePossible(blocked [][]int, source []int, target []int) bool {
+	// 离散化 a，返回的哈希表中的键值对分别为 a 中的原始值及其离散化后的对应值
+	discrete := func(a []int) (map[int]int, int) {
+		sort.Ints(a)
 
+		id := 0
+		if a[0] > 0 {
+			id = 1
+		}
+
+		mapping := map[int]int{a[0]: id}
+		pre := a[0]
+		for _, v := range a[1:] {
+			if v != pre {
+				if v == pre+1 {
+					id++
+				} else {
+					id += 2
+				}
+				mapping[v] = id
+				pre = v
+			}
+		}
+
+		const boundary int = 1e6
+		if a[len(a)-1] != boundary-1 {
+			id++
+		}
+
+		return mapping, id
+	}
+
+	n := len(blocked)
+	if n < 2 {
+		return true
+	}
+
+	d := []int{0, 1, 0, -1, 0}
+	rows := []int{source[0], target[0]}
+	cols := []int{source[1], target[1]}
+	for _, b := range blocked {
+		rows = append(rows, b[0])
+		cols = append(cols, b[1])
+	}
+
+	// 离散化行列坐标
+	rMapping, rBound := discrete(rows)
+	cMapping, cBound := discrete(cols)
+
+	grid := make([][]bool, rBound+1)
+	for i := range grid {
+		grid[i] = make([]bool, cBound+1)
+	}
+	for _, b := range blocked {
+		grid[rMapping[b[0]]][cMapping[b[1]]] = true
+	}
+
+	type pair struct{ x, y int }
+	sx, sy := rMapping[source[0]], cMapping[source[1]]
+	tx, ty := rMapping[target[0]], cMapping[target[1]]
+	grid[sx][sy] = true
+	q := []pair{{sx, sy}}
+	for len(q) > 0 {
+		p := q[0]
+		q = q[1:]
+		for i := 0; i < 4; i++ {
+			x, y := p.x+d[i], p.y+d[i+1]
+			if x < 0 || x > rBound || y < 0 || y > cBound || grid[x][y] {
+				continue
+			}
+
+			if x == tx && y == ty {
+				return true
+			}
+			grid[x][y] = true
+			q = append(q, pair{x, y})
+		}
+	}
+
+	return false
 }
 
 // @lc code=end
