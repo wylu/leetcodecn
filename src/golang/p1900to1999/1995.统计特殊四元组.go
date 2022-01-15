@@ -1,3 +1,5 @@
+package p1900to1999
+
 /*
  * @lc app=leetcode.cn id=1995 lang=golang
  *
@@ -88,4 +90,3 @@ func countQuadruplets(nums []int) int {
 // 	}
 // 	return ans
 // }
-

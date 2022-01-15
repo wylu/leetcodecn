@@ -1,3 +1,5 @@
+package p700to799
+
 /*
  * @lc app=leetcode.cn id=725 lang=golang
  *
@@ -91,4 +93,3 @@ func splitListToParts(head *ListNode, k int) []*ListNode {
 }
 
 // @lc code=end
-
