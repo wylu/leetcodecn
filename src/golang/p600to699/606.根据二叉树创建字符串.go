@@ -1,6 +1,9 @@
 package p600to699
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 /*
  * @lc app=leetcode.cn id=606 lang=golang
@@ -76,23 +79,54 @@ import "strconv"
  * }
  */
 func tree2str(root *TreeNode) string {
-	if root == nil {
-		return ""
+	ans := &strings.Builder{}
+	stk := []*TreeNode{root}
+	seen := map[*TreeNode]bool{}
+	for len(stk) > 0 {
+		node := stk[len(stk)-1]
+		if seen[node] {
+			if node != root {
+				ans.WriteByte(')')
+			}
+			stk = stk[:len(stk)-1]
+		} else {
+			seen[node] = true
+			if node != root {
+				ans.WriteByte('(')
+			}
+			ans.WriteString(strconv.Itoa(node.Val))
+			if node.Left == nil && node.Right != nil {
+				ans.WriteString("()")
+			}
+			if node.Right != nil {
+				stk = append(stk, node.Right)
+			}
+			if node.Left != nil {
+				stk = append(stk, node.Left)
+			}
+		}
 	}
-
-	cur := strconv.Itoa(root.Val)
-	left := tree2str(root.Left)
-	right := tree2str(root.Right)
-	switch {
-	case left == "" && right == "":
-		return cur
-	case left == "" && right != "":
-		return cur + "()(" + right + ")"
-	case left != "" && right == "":
-		return cur + "(" + left + ")"
-	default:
-		return cur + "(" + left + ")(" + right + ")"
-	}
+	return ans.String()
 }
 
 // @lc code=end
+
+// func tree2str(root *TreeNode) string {
+// 	if root == nil {
+// 		return ""
+// 	}
+
+// 	cur := strconv.Itoa(root.Val)
+// 	left := tree2str(root.Left)
+// 	right := tree2str(root.Right)
+// 	switch {
+// 	case left == "" && right == "":
+// 		return cur
+// 	case left == "" && right != "":
+// 		return cur + "()(" + right + ")"
+// 	case left != "" && right == "":
+// 		return cur + "(" + left + ")"
+// 	default:
+// 		return cur + "(" + left + ")(" + right + ")"
+// 	}
+// }
