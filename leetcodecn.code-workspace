@@ -21,7 +21,8 @@
 		"files.associations": {
 			"*.cjson": "jsonc",
 			"*.wxss": "css",
-			"*.wxs": "javascript"
+			"*.wxs": "javascript",
+			"vector": "cpp"
 		}
 	}
 }
