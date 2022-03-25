@@ -23,7 +23,8 @@
 			"*.wxss": "css",
 			"*.wxs": "javascript",
 			"initializer_list": "cpp",
-			"valarray": "cpp"
+			"valarray": "cpp",
+			"vector": "cpp"
 		}
 	}
 }
