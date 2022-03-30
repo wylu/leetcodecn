@@ -24,7 +24,12 @@
 			"*.wxs": "javascript",
 			"initializer_list": "cpp",
 			"valarray": "cpp",
-			"vector": "cpp"
+			"vector": "cpp",
+			"any": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"optional": "cpp",
+			"variant": "cpp"
 		}
 	}
 }
