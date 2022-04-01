@@ -7,7 +7,7 @@ void printVectorInt(vector<int>& vct) {
     printf("[");
     int n = vct.size();
     if (n > 0) printf("%d", vct[0]);
-    for (int i = 1; i < n; i++) printf("%d,", vct[i]);
+    for (int i = 1; i < n; i++) printf(",%d", vct[i]);
     printf("]\n");
 }
 
