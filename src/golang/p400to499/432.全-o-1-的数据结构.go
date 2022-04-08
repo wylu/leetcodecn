@@ -88,7 +88,7 @@ type AllOne struct {
 	nodes map[string]*list.Element
 }
 
-func Constructor() AllOne {
+func Constructor432() AllOne {
 	return AllOne{list.New(), map[string]*list.Element{}}
 }
 
