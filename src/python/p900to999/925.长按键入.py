@@ -77,6 +77,7 @@
 
 # @lc code=start
 class Solution:
+
     def isLongPressedName(self, name: str, typed: str) -> bool:
         i, j, m, n = 0, 0, len(name), len(typed)
         while j < n:
