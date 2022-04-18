@@ -62,7 +62,7 @@ package p800to899
  */
 func distanceK(root *TreeNode, target *TreeNode, k int) []int {
 	graph := map[int][]int{}
-	seen := map[int]struct{}{target.Val: struct{}{}}
+	seen := map[int]struct{}{target.Val: {}}
 	ans := []int{}
 
 	var preorder func(root *TreeNode)
