@@ -1,4 +1,4 @@
-package leetcodecn
+package p600to699
 
 import "strings"
 
