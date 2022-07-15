@@ -63,25 +63,64 @@
 #
 #
 #
+from itertools import zip_longest
 from typing import List
 
 
 # @lc code=start
 class WordFilter:
     def __init__(self, words: List[str]):
-        self.d = {}
+        self.tire = {}
+        self.wk = ('#', '#')
         for i, word in enumerate(words):
+            cur = self.tire
             m = len(word)
-            for prefix_size in range(1, m + 1):
-                for suffix_size in range(1, m + 1):
-                    key = word[:prefix_size] + '#' + word[-suffix_size:]
-                    self.d[key] = i
+            for j in range(m):
+                tmp = cur
+                for k in range(j, m):
+                    key = (word[k], '#')
+                    if key not in tmp:
+                        tmp[key] = {}
+                    tmp = tmp[key]
+                    tmp[self.wk] = i
+
+                tmp = cur
+                for k in range(j, m):
+                    key = ('#', word[-k - 1])
+                    if key not in tmp:
+                        tmp[key] = {}
+                    tmp = tmp[key]
+                    tmp[self.wk] = i
+
+                key = (word[j], word[-j - 1])
+                if key not in cur:
+                    cur[key] = {}
+                cur = cur[key]
+                cur[self.wk] = i
 
     def f(self, pref: str, suff: str) -> int:
-        return self.d.get(pref + '#' + suff, -1)
+        cur = self.tire
+        for key in zip_longest(pref, suff[::-1], fillvalue='#'):
+            if key not in cur:
+                return -1
+            cur = cur[key]
+        return cur[self.wk]
 
 
 # Your WordFilter object will be instantiated and called as such:
 # obj = WordFilter(words)
 # param_1 = obj.f(pref,suff)
 # @lc code=end
+
+# class WordFilter:
+#     def __init__(self, words: List[str]):
+#         self.d = {}
+#         for i, word in enumerate(words):
+#             m = len(word)
+#             for prefix_size in range(1, m + 1):
+#                 for suffix_size in range(1, m + 1):
+#                     key = word[:prefix_size] + '#' + word[-suffix_size:]
+#                     self.d[key] = i
+
+#     def f(self, pref: str, suff: str) -> int:
+#         return self.d.get(pref + '#' + suff, -1)
