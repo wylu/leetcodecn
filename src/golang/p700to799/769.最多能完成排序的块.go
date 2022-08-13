@@ -75,14 +75,32 @@ func maxChunksToSorted(arr []int) int {
 		return y
 	}
 
-	ans, n := 0, len(arr)
-	for i := 0; i < n; {
-		for j := arr[i]; i <= j; i++ {
-			j = max(j, arr[i])
+	ans, j := 0, 0
+	for i, x := range arr {
+		j = max(j, x)
+		if j == i {
+			ans++
 		}
-		ans++
 	}
 	return ans
 }
 
 // @lc code=end
+
+// func maxChunksToSorted(arr []int) int {
+// 	max := func(x, y int) int {
+// 		if x > y {
+// 			return x
+// 		}
+// 		return y
+// 	}
+
+// 	ans, n := 0, len(arr)
+// 	for i := 0; i < n; {
+// 		for j := arr[i]; i <= j; i++ {
+// 			j = max(j, arr[i])
+// 		}
+// 		ans++
+// 	}
+// 	return ans
+// }
