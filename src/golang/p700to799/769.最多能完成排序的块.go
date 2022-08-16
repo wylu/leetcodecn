@@ -67,7 +67,7 @@ package p700to799
  */
 
 // @lc code=start
-func maxChunksToSorted(arr []int) int {
+func maxChunksToSorted769(arr []int) int {
 	max := func(x, y int) int {
 		if x > y {
 			return x
