@@ -73,7 +73,7 @@ package p1400to1499
  */
 
 // @lc code=start
-func maxScore(cardPoints []int, k int) int {
+func maxScore1423(cardPoints []int, k int) int {
 	sum := func(nums []int) int {
 		tot := 0
 		for _, num := range nums {
