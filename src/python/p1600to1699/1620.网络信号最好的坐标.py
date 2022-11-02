@@ -95,18 +95,16 @@ from typing import List
 
 # @lc code=start
 class Solution:
+
     def bestCoordinate(self, towers: List[List[int]],
                        radius: int) -> List[int]:
         minx = miny = 0x7FFFFFFF
         maxx = maxy = -0x80000000
         for x, y, _ in towers:
-            minx = min(minx, x)
-            miny = min(miny, y)
-            maxx = max(maxx, x)
-            maxy = max(maxy, y)
+            minx, miny = min(minx, x), min(miny, y)
+            maxx, maxy = max(maxx, x), max(maxy, y)
 
-        ans = []
-        power = 0
+        cx = cy = power = 0
         for i in range(minx, maxx + 1):
             for j in range(miny, maxy + 1):
                 tot = 0
@@ -116,15 +114,9 @@ class Solution:
                         tot += math.floor(q / (1 + d))
 
                 if tot > power:
-                    ans = [[i, j]]
-                    power = tot
-                elif tot == power:
-                    ans.append([i, j])
+                    cx, cy, power = i, j, tot
 
-        if power > 0:
-            ans.sort()
-            return ans[0]
-        return [0, 0]
+        return [cx, cy]
 
 
 # @lc code=end
